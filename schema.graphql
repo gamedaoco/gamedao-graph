@@ -1,0 +1,15 @@
+type Body @entity {
+    id: ID!
+    creator: String!
+    controller: String!
+    treasury: String!
+    name: String!
+    cid: String!
+    body: Int!
+    access: Int!
+    feeModel: Int!
+    fee: BigInt!
+    govAsset: Int!
+    payAsset: Int!
+    memberLimit: BigInt!
+}
