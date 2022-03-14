@@ -3,5 +3,7 @@
 
 /kusamaVersions.json
 
+.env
+
 # IDE files
 /.idea
