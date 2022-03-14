@@ -2,7 +2,9 @@
   "outDir": "src/types",
   "chainVersions": "zeroVersions.json",
   "typesBundle": "zeroTypesBundle.json",
-  "events": [],
+  "events": [
+    "gameDaoControl.BodyCreated"
+  ],
   "calls": [
     "gameDaoControl.create"
   ]

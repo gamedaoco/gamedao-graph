@@ -11,6 +11,9 @@ export class Body {
   id!: string
 
   @Column_("text", {nullable: false})
+  hash!: string
+
+  @Column_("text", {nullable: false})
   creator!: string
 
   @Column_("text", {nullable: false})

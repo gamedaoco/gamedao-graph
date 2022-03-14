@@ -1,5 +1,7 @@
 {
-	"types": {},
+	"types": {
+		"AccountId": "[u8; 32]"
+	},
 	"typesAlias": {},
 	"versions": [
 		{
@@ -51,6 +53,7 @@
 				},
 				"Body": {
 					"id": "Hash",
+					"controller": "AccountId",
 					"index": "u128",
 					"creator": "AccountId",
 					"name": "Vec<u8>",

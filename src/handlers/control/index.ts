@@ -1,5 +1,6 @@
 // Imports
 import {handleCreateExtrinsic} from "./extrinsics/createHandler";
+import {handleBodyCreatedEvent} from "./extrinsics/bodyCreatedHandler";
 
 // Types
 import {IPallet} from "../../@types/palletHandler";
@@ -13,5 +14,10 @@ export default {
             handler: handleCreateExtrinsic,
         }
     ],
-    eventHandlers:     []
+    eventHandlers:     [
+        {
+            action: 'BodyCreated',
+            handler: handleBodyCreatedEvent,
+        }
+    ]
 } as IPallet;

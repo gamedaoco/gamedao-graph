@@ -1,5 +1,6 @@
 type Body @entity {
     id: ID!
+    hash: String
     creator: String!
     controller: String!
     treasury: String!

@@ -10,9 +10,9 @@ const eventHandlers: IPalletEventHandler[] = [];
 
 // Collect all handlers
 pallets.forEach(pallet => {
-    const mergeHandlers = (handlers: IPalletActionHandler<any, any>[]) => {
+    const mergeHandlers = (handlers: IPalletActionHandler<any, any>[], saveHandlers: any[]) => {
         handlers.forEach(handler => {
-            extrinsicHandlers.push({
+            saveHandlers.push({
                 action:  `${pallet.name}.${handler.action}`,
                 options: handler.options,
                 handler: handler.handler,
@@ -21,8 +21,8 @@ pallets.forEach(pallet => {
     }
 
     // Merge them into main arrays
-    mergeHandlers(pallet.extrinsicHandlers);
-    mergeHandlers(pallet.eventHandlers);
+    mergeHandlers(pallet.extrinsicHandlers, extrinsicHandlers);
+    mergeHandlers(pallet.eventHandlers, eventHandlers);
 });
 
 // Exports
