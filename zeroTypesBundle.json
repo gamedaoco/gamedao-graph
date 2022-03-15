@@ -1,7 +1,5 @@
 {
-	"types": {
-		"AccountId": "[u8; 32]"
-	},
+	"types": {},
 	"typesAlias": {},
 	"versions": [
 		{
