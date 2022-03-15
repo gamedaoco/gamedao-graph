@@ -12,4 +12,11 @@ type Body @entity {
     govAsset: Int!
     payAsset: Int!
     memberLimit: BigInt!
+    members: [BodyMember!] @derivedFrom(field: "body")
+}
+
+type BodyMember @entity {
+    id: ID!
+    body: Body!
+    address: String!
 }

@@ -3,7 +3,9 @@
   "chainVersions": "zeroVersions.json",
   "typesBundle": "zeroTypesBundle.json",
   "events": [
-    "gameDaoControl.BodyCreated"
+    "gameDaoControl.BodyCreated",
+    "gameDaoControl.AddMember",
+    "gameDaoControl.RemoveMember"
   ],
   "calls": [
     "gameDaoControl.create"

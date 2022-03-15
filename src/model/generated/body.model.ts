@@ -1,5 +1,6 @@
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_} from "typeorm"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, OneToMany as OneToMany_} from "typeorm"
 import * as marshal from "./marshal"
+import {BodyMember} from "./bodyMember.model"
 
 @Entity_()
 export class Body {
@@ -45,4 +46,7 @@ export class Body {
 
   @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
   memberLimit!: bigint
+
+  @OneToMany_(() => BodyMember, e => e.body)
+  members!: BodyMember[]
 }

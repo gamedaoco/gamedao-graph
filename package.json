@@ -13,7 +13,6 @@
     "processor:start": "node lib/processor.js",
     "query-node:start": "squid-graphql-server",
     "generate:versions": "node gen-versions.js",
-    "generate:typegen:actions": "npm run build && node gen-typegen-calls-events.js && echo Calls and Extrinsics generated!",
     "generate:type-wrappers": "npx squid-substrate-typegen typegen.json"
   },
   "dependencies": {

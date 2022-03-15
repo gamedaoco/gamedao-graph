@@ -11,12 +11,13 @@ import { Body } from '../../../model';
 import { BodyCreationData } from '../../../@types/pallets/control/bodyCreationData';
 import { GameDaoControlBodyCreatedEvent } from '../../../types/events';
 import { GameDaoControlCreateCall } from '../../../types/calls';
+import { addBodyMember } from '../../../database/bodyMember';
 
 // Logic
 async function handleBodyCreatedEvent(context: EventHandlerContext) {
 	if (!context.extrinsic) return;
 
-	// Get versioned extrinsic call
+	// Get versioned call
 	const callCreateData = getCreateData(context);
 	if (!callCreateData) return;
 
@@ -45,6 +46,8 @@ async function handleBodyCreatedEvent(context: EventHandlerContext) {
 	}
 
 	await context.store.save(body);
+
+	await addBodyMember(context.store, body, body.creator);
 }
 
 function getCreateData(context: EventHandlerContext): BodyCreationData | null {
