@@ -1,0 +1,6 @@
+{
+    "chainRPC": "wss://vmd84731.contaboserver.net",
+    "archiveGQl": "http://vmd84731.contaboserver.net:4010/v1/graphql",
+    "startBlock": 5250000,
+    "networkAddressPrefix": 25
+}

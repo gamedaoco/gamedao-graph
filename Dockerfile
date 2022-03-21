@@ -27,7 +27,6 @@ COPY --from=builder /squid/lib lib
 ADD db db
 ADD schema.graphql .
 ADD zeroTypesBundle.json .
-ADD .env .
 # TODO: use shorter PROMETHEUS_PORT
 ENV PROCESSOR_PROMETHEUS_PORT 3000
 EXPOSE 3000

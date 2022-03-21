@@ -1,12 +1,10 @@
 // Imports
-// 3rd
-import './loadEnv';
-
 // Handlers
 import { eventHandlers, extrinsicHandlers } from './handlerMapping';
 
 // Constants
 import { EXTRINSIC_SUCCESS } from './constants/extrinsics';
+import { archiveGQl, chainRPC, startBlock } from './config.json';
 
 // Types
 import { EventHandlerOptions, ExtrinsicHandlerOptions } from '@subsquid/substrate-processor/src/processor';
@@ -22,15 +20,15 @@ const processor = new SubstrateProcessor('gamedao_protocol_indexer');
 processor.setTypesBundle('zeroTypesBundle.json');
 processor.setBatchSize(500);
 
-if (process.env.START_BLOCK) {
+if (startBlock !== -1) {
 	processor.setBlockRange({
-		from: parseInt(process.env.START_BLOCK),
+		from: startBlock,
 	});
 }
 
 processor.setDataSource({
-	archive: process.env.ARCHIVE_GQL ?? '',
-	chain: process.env.CHAIN_RPC ?? '',
+	archive: archiveGQl,
+	chain: chainRPC,
 });
 
 // Add handlers
