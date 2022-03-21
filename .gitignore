@@ -3,8 +3,6 @@
 
 /kusamaVersions.json
 
-.env
-
 # IDE files
 /.idea
 yarn-error.log
