@@ -1,11 +1,11 @@
 interface IdentityUpsertData {
 	address: string;
-	displayName: string;
-	legalName: string;
-	email: string;
-	riot: string;
-	image: string;
-	twitter: string;
+	displayName: string | null;
+	legalName: string | null;
+	email: string | null;
+	riot: string | null;
+	image: string | null;
+	twitter: string | null;
 }
 
 export { IdentityUpsertData };

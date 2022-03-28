@@ -14,7 +14,7 @@ import { createOrUpdateIdentity } from '../../../database/identity';
 async function handleIdentitySetEvent(context: EventHandlerContext) {
 	if (!context.extrinsic) return;
 
-	const getValue = (data: string | undefined) => (data ? hexStringToString(data) : '');
+	const getValue = (data: string | undefined) => (data ? hexStringToString(data) : null);
 
 	const identityData = context.extrinsic.args[0].value as { [key: string]: any };
 
