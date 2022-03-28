@@ -21,6 +21,8 @@ async function handleAddMemberEvent(context: EventHandlerContext) {
 			hashToHexString(addMemberData.asV21[0]),
 			addressCodec.encode(addMemberData.asV21[1]),
 		);
+	} else {
+		console.error(`Unknown version of body created event!`);
 	}
 }
 

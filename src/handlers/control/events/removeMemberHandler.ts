@@ -21,6 +21,8 @@ async function handleRemoveMemberEvent(context: EventHandlerContext) {
 			hashToHexString(removeMemberData.asV21[0]),
 			addressCodec.encode(removeMemberData.asV21[1]),
 		);
+	} else {
+		console.error(`Unknown version of body created event!`);
 	}
 }
 

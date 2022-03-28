@@ -3,14 +3,14 @@
 import { Store } from '@subsquid/substrate-processor';
 
 // Models
-import { Body, BodyMember } from '../model';
+import { BodyMember } from '../model';
 import { getBody } from './body';
+import { createOrUpdateIdentity } from './identity';
 
 // Functions
-const getMemberId = (body: Body | string, member: string) =>
-	`${body instanceof Body ? body.id : body}-${member}`.toLowerCase();
+const getMemberId = (body: string, member: string) => `${body}-${member}`.toLowerCase();
 
-async function getBodyMember(store: Store, body: Body | string, member: string): Promise<BodyMember | null> {
+async function getBodyMember(store: Store, body: string, member: string): Promise<BodyMember | null> {
 	return (
 		(await store.findOne(BodyMember, {
 			where: {
@@ -20,7 +20,7 @@ async function getBodyMember(store: Store, body: Body | string, member: string):
 	);
 }
 
-async function addBodyMember(store: Store, body: Body | string, member: string) {
+async function addBodyMember(store: Store, body: string, member: string) {
 	// Check if address already member
 	if (await getBodyMember(store, body, member)) return;
 
@@ -33,12 +33,12 @@ async function addBodyMember(store: Store, body: Body | string, member: string) 
 
 	bodyMember.id = getMemberId(body, member);
 	bodyMember.body = bodyModel;
-	bodyMember.address = member;
+	bodyMember.identity = await createOrUpdateIdentity(store, member, null);
 
 	await store.save(bodyMember);
 }
 
-async function removeBodyMember(store: Store, body: Body | string, member: string) {
+async function removeBodyMember(store: Store, body: string, member: string) {
 	// Check if address is member
 	const bodyMember = await getBodyMember(store, body, member);
 	if (!bodyMember) return;

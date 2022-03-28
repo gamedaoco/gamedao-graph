@@ -5,7 +5,8 @@
   "events": [
     "gameDaoControl.BodyCreated",
     "gameDaoControl.AddMember",
-    "gameDaoControl.RemoveMember"
+    "gameDaoControl.RemoveMember",
+    "identity.IdentitySet"
   ],
   "calls": [
     "gameDaoControl.create"

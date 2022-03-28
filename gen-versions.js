@@ -1,9 +1,7 @@
-const {config} = require('dotenv');
-const {exec} = require('child_process');
+const { exec } = require('child_process');
+const { chainRPC, archiveGQL } = require('./src/config.json');
 
-config();
-
-const cmd = `npx squid-substrate-metadata-explorer --chain ${process.env.CHAIN_RPC} --archive ${process.env.ARCHIVE_GQL} --out zeroVersions.json`;
+const cmd = `npx squid-substrate-metadata-explorer --chain ${chainRPC} --archive ${archiveGQL} --out zeroVersions.json`;
 console.log(`> ${cmd}`);
 const execCmd = exec(cmd);
 

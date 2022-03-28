@@ -22,7 +22,7 @@ async function handleBodyCreatedEvent(context: EventHandlerContext) {
 	if (!callCreateData) return;
 
 	// Get versioned instance
-	const bodyCreatedData = new GameDaoControlBodyCreatedEvent(context);
+	const bodyCreatedEventData = new GameDaoControlBodyCreatedEvent(context);
 
 	// Create body
 	const body = new Body();
@@ -41,13 +41,16 @@ async function handleBodyCreatedEvent(context: EventHandlerContext) {
 	body.memberLimit = callCreateData.memberLimit;
 
 	// Get id
-	if (bodyCreatedData.isV21) {
-		body.id = hashToHexString(bodyCreatedData.asV21[1]);
+	if (bodyCreatedEventData.isV21) {
+		body.id = hashToHexString(bodyCreatedEventData.asV21[1]);
+	} else {
+		console.error(`Unknown version of body created event!`);
+		return;
 	}
 
 	await context.store.save(body);
 
-	await addBodyMember(context.store, body, body.creator);
+	await addBodyMember(context.store, body.id, body.creator);
 }
 
 function getCreateData(context: EventHandlerContext): BodyCreationData | null {
@@ -64,6 +67,8 @@ function getCreateData(context: EventHandlerContext): BodyCreationData | null {
 			return createData.asV21;
 		} else if (createData.isV30) {
 			return createData.asV30;
+		} else {
+			console.error(`Unknown version of body extrinsic!`);
 		}
 	}
 

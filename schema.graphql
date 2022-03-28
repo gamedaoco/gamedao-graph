@@ -18,5 +18,15 @@ type Body @entity {
 type BodyMember @entity {
     id: ID!
     body: Body!
-    address: String!
+    identity: Identity!
+}
+
+type Identity @entity {
+    id: ID!
+    displayName: String
+    legalName: String
+    email: String
+    riot: String
+    image: String
+    twitter: String
 }

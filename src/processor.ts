@@ -1,14 +1,15 @@
 // Imports
+import './loadConfig';
+
 // Handlers
 import { eventHandlers, extrinsicHandlers } from './handlerMapping';
 
 // Constants
 import { EXTRINSIC_SUCCESS } from './constants/extrinsics';
-import { archiveGQl, chainRPC, startBlock } from './config.json';
+import { archiveGQL, chainRPC, startBlock } from './config.json';
 
 // Types
-import { EventHandlerOptions, ExtrinsicHandlerOptions } from '@subsquid/substrate-processor/src/processor';
-import { SubstrateProcessor } from '@subsquid/substrate-processor';
+import { SubstrateProcessor, EventHandlerOptions, ExtrinsicHandlerOptions } from '@subsquid/substrate-processor';
 
 // Defaults
 const defaultExtrinsicOptions: ExtrinsicHandlerOptions = { triggerEvents: [EXTRINSIC_SUCCESS] };
@@ -27,7 +28,7 @@ if (startBlock !== -1) {
 }
 
 processor.setDataSource({
-	archive: archiveGQl,
+	archive: archiveGQL,
 	chain: chainRPC,
 });
 
