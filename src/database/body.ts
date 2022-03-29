@@ -2,12 +2,15 @@
 // 3rd
 import { Store } from '@subsquid/substrate-processor';
 
-// Models
+// Database
 import { Body } from '../model';
 
+// Helpers
+import { get } from './helper';
+
 // Functions
-async function getBody(store: Store, body: string): Promise<Body | null> {
-	return (await store.findOne(Body, body)) ?? null;
+function getBody(store: Store, body: string): Promise<Body | null> {
+	return get(store, Body, body);
 }
 
 // Exports

@@ -2,13 +2,18 @@
 // 3rd
 import { Store } from '@subsquid/substrate-processor';
 
-// Models
+// Types
+import { IdentityUpsertData } from '../@types/pallets/identity/identityUpsertData';
+
+// Database
 import { Identity } from '../model';
-import { IdentityUpsertData } from '../@types/identity';
+
+// Helpers
+import { get } from './helper';
 
 // Functions
-async function getIdentity(store: Store, identity: string): Promise<Identity | null> {
-	return (await store.findOne(Identity, identity)) ?? null;
+function getIdentity(store: Store, identity: string): Promise<Identity | null> {
+	return get(store, Identity, identity);
 }
 
 async function createOrUpdateIdentity(

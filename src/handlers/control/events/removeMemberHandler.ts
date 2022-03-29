@@ -22,7 +22,7 @@ async function handleRemoveMemberEvent(context: EventHandlerContext) {
 			addressCodec.encode(removeMemberData.asV21[1]),
 		);
 	} else {
-		console.error(`Unknown version of body created event!`);
+		console.error(`Unknown version of remove member event!`);
 	}
 }
 

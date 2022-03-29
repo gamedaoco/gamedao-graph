@@ -34,3 +34,28 @@ export class GameDaoControlCreateCall {
     return this.asV30
   }
 }
+
+export class GameDaoCrowdfundingCreateCall {
+  constructor(private ctx: CallContext) {
+    assert(this.ctx.extrinsic.name === 'gameDaoCrowdfunding.create')
+  }
+
+  get isV21(): boolean {
+    return this.ctx._chain.getCallHash('gameDaoCrowdfunding.create') === 'f02ec73ba9dff7a88d1ec022088cb5546440e457000c97276e03973202126184'
+  }
+
+  get asV21(): {org: Uint8Array, admin: Uint8Array, name: Uint8Array, target: bigint, deposit: bigint, expiry: number, protocol: number, governance: number, cid: Uint8Array, tokenSymbol: Uint8Array, tokenName: Uint8Array} {
+    assert(this.isV21)
+    return this.ctx._chain.decodeCall(this.ctx.extrinsic)
+  }
+
+  get isLatest(): boolean {
+    deprecateLatest()
+    return this.isV21
+  }
+
+  get asLatest(): {org: Uint8Array, admin: Uint8Array, name: Uint8Array, target: bigint, deposit: bigint, expiry: number, protocol: number, governance: number, cid: Uint8Array, tokenSymbol: Uint8Array, tokenName: Uint8Array} {
+    deprecateLatest()
+    return this.asV21
+  }
+}

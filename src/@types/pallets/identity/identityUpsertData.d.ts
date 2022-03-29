@@ -1,4 +1,4 @@
-interface IdentityUpsertData {
+export interface IdentityUpsertData {
 	address: string;
 	displayName: string | null;
 	legalName: string | null;
@@ -7,5 +7,3 @@ interface IdentityUpsertData {
 	image: string | null;
 	twitter: string | null;
 }
-
-export { IdentityUpsertData };

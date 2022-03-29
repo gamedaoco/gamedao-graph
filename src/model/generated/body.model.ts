@@ -1,6 +1,7 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, OneToMany as OneToMany_} from "typeorm"
 import * as marshal from "./marshal"
 import {BodyMember} from "./bodyMember.model"
+import {Campaign} from "./campaign.model"
 
 @Entity_()
 export class Body {
@@ -19,9 +20,6 @@ export class Body {
 
   @Column_("text", {nullable: false})
   treasury!: string
-
-  @Column_("text", {nullable: false})
-  name!: string
 
   @Column_("text", {nullable: false})
   cid!: string
@@ -49,4 +47,7 @@ export class Body {
 
   @OneToMany_(() => BodyMember, e => e.body)
   members!: BodyMember[]
+
+  @OneToMany_(() => Campaign, e => e.body)
+  campaigns!: Campaign[]
 }

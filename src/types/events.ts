@@ -76,6 +76,31 @@ export class GameDaoControlRemoveMemberEvent {
   }
 }
 
+export class GameDaoCrowdfundingCampaignCreatedEvent {
+  constructor(private ctx: EventContext) {
+    assert(this.ctx.event.name === 'gameDaoCrowdfunding.CampaignCreated')
+  }
+
+  get isV21(): boolean {
+    return this.ctx._chain.getEventHash('gameDaoCrowdfunding.CampaignCreated') === '4538582dac687c57e0e73c4503493827c4beeb76b633f46d78f88a7096de0e79'
+  }
+
+  get asV21(): [Uint8Array, Uint8Array, Uint8Array, bigint, bigint, number, Uint8Array] {
+    assert(this.isV21)
+    return this.ctx._chain.decodeEvent(this.ctx.event)
+  }
+
+  get isLatest(): boolean {
+    deprecateLatest()
+    return this.isV21
+  }
+
+  get asLatest(): [Uint8Array, Uint8Array, Uint8Array, bigint, bigint, number, Uint8Array] {
+    deprecateLatest()
+    return this.asV21
+  }
+}
+
 export class IdentityIdentitySetEvent {
   constructor(private ctx: EventContext) {
     assert(this.ctx.event.name === 'identity.IdentitySet')

@@ -4,10 +4,10 @@ import { hexStringToString } from '../../../utils';
 // 3rd
 import { EventHandlerContext } from '@subsquid/substrate-processor';
 
-// Models
+// Database
 
 // Types
-import { IdentityUpsertData } from '../../../@types/identity';
+import { IdentityUpsertData } from '../../../@types/pallets/identity/identityUpsertData';
 import { createOrUpdateIdentity } from '../../../database/identity';
 
 // Logic

@@ -1,9 +1,18 @@
+type Identity @entity {
+    id: ID!
+    displayName: String
+    legalName: String
+    email: String
+    riot: String
+    image: String
+    twitter: String
+}
+
 type Body @entity {
     id: ID!
     creator: String!
     controller: String!
     treasury: String!
-    name: String!
     cid: String!
     body: Int!
     access: Int!
@@ -13,20 +22,26 @@ type Body @entity {
     payAsset: Int!
     memberLimit: BigInt!
     members: [BodyMember!] @derivedFrom(field: "body")
+    campaigns: [Campaign] @derivedFrom(field: "body")
 }
 
 type BodyMember @entity {
     id: ID!
     body: Body!
+    address: String!
     identity: Identity!
 }
 
-type Identity @entity {
+type Campaign @entity {
     id: ID!
-    displayName: String
-    legalName: String
-    email: String
-    riot: String
-    image: String
-    twitter: String
+    body: Body!
+    admin: String!
+    target: BigInt!
+    deposit: BigInt!
+    expiry: Int!
+    protocol: Int!
+    governance: Int!
+    cid: String!
+    tokenSymbol: String!
+    tokenName: String!
 }

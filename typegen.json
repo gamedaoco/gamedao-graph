@@ -6,9 +6,11 @@
     "gameDaoControl.BodyCreated",
     "gameDaoControl.AddMember",
     "gameDaoControl.RemoveMember",
-    "identity.IdentitySet"
+    "identity.IdentitySet",
+    "gameDaoCrowdfunding.CampaignCreated"
   ],
   "calls": [
-    "gameDaoControl.create"
+    "gameDaoControl.create",
+    "gameDaoCrowdfunding.create"
   ]
 }

@@ -2,22 +2,19 @@
 // 3rd
 import { Store } from '@subsquid/substrate-processor';
 
-// Models
+// Database
 import { BodyMember } from '../model';
-import { getBody } from './body';
+
+// Helpers
 import { createOrUpdateIdentity } from './identity';
+import { getBody } from './body';
+import { get } from './helper';
 
 // Functions
 const getMemberId = (body: string, member: string) => `${body}-${member}`.toLowerCase();
 
-async function getBodyMember(store: Store, body: string, member: string): Promise<BodyMember | null> {
-	return (
-		(await store.findOne(BodyMember, {
-			where: {
-				id: getMemberId(body, member),
-			},
-		})) ?? null
-	);
+function getBodyMember(store: Store, body: string, member: string): Promise<BodyMember | null> {
+	return get(store, BodyMember, getMemberId(body, member));
 }
 
 async function addBodyMember(store: Store, body: string, member: string) {
@@ -33,6 +30,7 @@ async function addBodyMember(store: Store, body: string, member: string) {
 
 	bodyMember.id = getMemberId(body, member);
 	bodyMember.body = bodyModel;
+	bodyMember.address = member;
 	bodyMember.identity = await createOrUpdateIdentity(store, member, null);
 
 	await store.save(bodyMember);

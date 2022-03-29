@@ -4,7 +4,7 @@ import { addressCodec, hashToHexString } from '../../../utils';
 // 3rd
 import { EventHandlerContext } from '@subsquid/substrate-processor';
 
-// Models
+// Database
 import { Body } from '../../../model';
 
 // Types
@@ -27,10 +27,17 @@ async function handleBodyCreatedEvent(context: EventHandlerContext) {
 	// Create body
 	const body = new Body();
 
+	// Get id
+	if (bodyCreatedEventData.isV21) {
+		body.id = hashToHexString(bodyCreatedEventData.asV21[1]);
+	} else {
+		console.error(`Unknown version of body created event!`);
+		return;
+	}
+
 	body.creator = context.extrinsic.signer;
 	body.controller = addressCodec.encode(callCreateData.controller);
 	body.treasury = addressCodec.encode(callCreateData.treasury);
-	body.name = callCreateData.name.toString();
 	body.cid = callCreateData.cid.toString();
 	body.body = callCreateData.body;
 	body.access = callCreateData.access;
@@ -39,14 +46,6 @@ async function handleBodyCreatedEvent(context: EventHandlerContext) {
 	body.govAsset = callCreateData.govAsset;
 	body.payAsset = callCreateData.payAsset;
 	body.memberLimit = callCreateData.memberLimit;
-
-	// Get id
-	if (bodyCreatedEventData.isV21) {
-		body.id = hashToHexString(bodyCreatedEventData.asV21[1]);
-	} else {
-		console.error(`Unknown version of body created event!`);
-		return;
-	}
 
 	await context.store.save(body);
 
@@ -68,7 +67,7 @@ function getCreateData(context: EventHandlerContext): BodyCreationData | null {
 		} else if (createData.isV30) {
 			return createData.asV30;
 		} else {
-			console.error(`Unknown version of body extrinsic!`);
+			console.error(`Unknown version of create body extrinsic!`);
 		}
 	}
 

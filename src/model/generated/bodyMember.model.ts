@@ -15,6 +15,9 @@ export class BodyMember {
   @ManyToOne_(() => Body, {nullable: false})
   body!: Body
 
+  @Column_("text", {nullable: false})
+  address!: string
+
   @Index_()
   @ManyToOne_(() => Identity, {nullable: false})
   identity!: Identity
