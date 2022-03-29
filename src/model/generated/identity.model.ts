@@ -1,4 +1,5 @@
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_} from "typeorm"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, OneToMany as OneToMany_} from "typeorm"
+import {BodyMember} from "./bodyMember.model"
 
 @Entity_()
 export class Identity {
@@ -26,4 +27,7 @@ export class Identity {
 
   @Column_("text", {nullable: true})
   twitter!: string | undefined | null
+
+  @OneToMany_(() => BodyMember, e => e.identity)
+  bodyMembers!: BodyMember[]
 }

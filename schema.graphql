@@ -6,6 +6,8 @@ type Identity @entity {
     riot: String
     image: String
     twitter: String
+
+    bodyMembers: [BodyMember!]! @derivedFrom(field: "identity")
 }
 
 type Body @entity {
@@ -22,7 +24,7 @@ type Body @entity {
     payAsset: Int!
     memberLimit: BigInt!
     members: [BodyMember!] @derivedFrom(field: "body")
-    campaigns: [Campaign] @derivedFrom(field: "body")
+    campaigns: [Campaign]! @derivedFrom(field: "body")
 }
 
 type BodyMember @entity {
