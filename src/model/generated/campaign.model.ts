@@ -16,6 +16,9 @@ export class Campaign {
   body!: Body
 
   @Column_("text", {nullable: false})
+  creator!: string
+
+  @Column_("text", {nullable: false})
   admin!: string
 
   @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})

@@ -35,6 +35,7 @@ type BodyMember @entity {
 type Campaign @entity {
     id: ID!
     body: Body!
+    creator: String!
     admin: String!
     target: BigInt!
     deposit: BigInt!

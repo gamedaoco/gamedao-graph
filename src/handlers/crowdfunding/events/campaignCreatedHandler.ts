@@ -45,6 +45,7 @@ async function handleCampaignCreatedEvent(context: EventHandlerContext) {
 
 	campaign.body = body;
 	campaign.admin = addressCodec.encode(callCreateData.admin);
+	campaign.creator = context.extrinsic.signer;
 	campaign.target = callCreateData.target;
 	campaign.deposit = callCreateData.deposit;
 	campaign.expiry = callCreateData.expiry;
