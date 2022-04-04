@@ -1,5 +1,6 @@
 export * from "./identity.model"
 export * from "./body.model"
+export * from "./bodyMetadata.model"
 export * from "./bodyMember.model"
 export * from "./campaign.model"
 export * from "./campaignContributor.model"

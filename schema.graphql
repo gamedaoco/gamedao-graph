@@ -25,8 +25,20 @@ type Body @entity {
     govAsset: Int!
     payAsset: Int!
     memberLimit: BigInt!
+    metadata: BodyMetadata!
     members: [BodyMember!] @derivedFrom(field: "body")
-    campaigns: [Campaign]! @derivedFrom(field: "body")
+    campaigns: [Campaign!]! @derivedFrom(field: "body")
+}
+
+type BodyMetadata @entity {
+    id: ID!
+    name: String!
+    description: String!
+    website: String
+    email: String
+    repo: String
+    logo: String
+    header: String
 }
 
 type BodyMember @entity {

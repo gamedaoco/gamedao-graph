@@ -1,14 +1,13 @@
 // Imports
 import { hashToHexString } from '../../../utils';
-
-// 3rd
-import { EventHandlerContext } from '@subsquid/substrate-processor';
+import { fetchBodyMetaData } from '../../../ipfs/body';
 
 // Database
 import { addBodyMember } from '../../../database/bodyMember';
 import { createBody } from '../../../database/body';
 
 // Types
+import { EventHandlerContext } from '@subsquid/substrate-processor';
 import { BodyCreationData } from '../../../@types/pallets/control/bodyCreationData';
 import { GameDaoControlBodyCreatedEvent } from '../../../types/events';
 import { GameDaoControlCreateCall } from '../../../types/calls';
@@ -33,8 +32,16 @@ async function handleBodyCreatedEvent(context: EventHandlerContext) {
 		return;
 	}
 
+	// Load body metadata
+	const cid = callCreateData.cid.toString();
+	const metadata = await fetchBodyMetaData(cid);
+	if (!metadata) {
+		console.error(`Couldn't fetch metadata of body ${id} cid ${cid}`);
+		return;
+	}
+
 	// Create body
-	const body = await createBody(context.store, id, context.extrinsic.signer, callCreateData);
+	const body = await createBody(context.store, id, context.extrinsic.signer, callCreateData, metadata);
 
 	// Add initial member (creator of DAO)
 	await addBodyMember(context.store, body.id, body.creator);
