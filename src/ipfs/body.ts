@@ -5,9 +5,9 @@ import { fetchJsonByCid } from './ipfs';
 import { BodyMetadata } from '../@types/ipfs/bodyMetadata';
 
 // Functions
-async function fetchBodyMetaData(cid: string): Promise<BodyMetadata | null> {
+async function fetchBodyMetadata(cid: string): Promise<BodyMetadata | null> {
 	return fetchJsonByCid(cid);
 }
 
 // Exports
-export { fetchBodyMetaData };
+export { fetchBodyMetadata };

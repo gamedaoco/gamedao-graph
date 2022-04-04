@@ -1,6 +1,7 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, ManyToOne as ManyToOne_, Index as Index_, OneToMany as OneToMany_} from "typeorm"
 import * as marshal from "./marshal"
 import {Body} from "./body.model"
+import {CampaignMetadata} from "./campaignMetadata.model"
 import {CampaignContributor} from "./campaignContributor.model"
 
 @Entity_()
@@ -51,6 +52,10 @@ export class Campaign {
 
   @Column_("bool", {nullable: false})
   isFunded!: boolean
+
+  @Index_()
+  @ManyToOne_(() => CampaignMetadata, {nullable: false})
+  metadata!: CampaignMetadata
 
   @OneToMany_(() => CampaignContributor, e => e.campaign)
   contributors!: CampaignContributor[]

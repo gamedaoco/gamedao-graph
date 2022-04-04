@@ -1,6 +1,6 @@
 // Imports
 import { hashToHexString } from '../../../utils';
-import { fetchBodyMetaData } from '../../../ipfs/body';
+import { fetchBodyMetadata } from '../../../ipfs/body';
 
 // Database
 import { addBodyMember } from '../../../database/bodyMember';
@@ -34,7 +34,7 @@ async function handleBodyCreatedEvent(context: EventHandlerContext) {
 
 	// Load body metadata
 	const cid = callCreateData.cid.toString();
-	const metadata = await fetchBodyMetaData(cid);
+	const metadata = await fetchBodyMetadata(cid);
 	if (!metadata) {
 		console.error(`Couldn't fetch metadata of body ${id} cid ${cid}`);
 		return;

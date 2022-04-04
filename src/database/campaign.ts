@@ -4,14 +4,16 @@ import { Store } from '@subsquid/substrate-processor';
 
 // Database
 import { Campaign } from '../model';
+import { getBody } from './body';
+import { upsertCampaignMetadata } from './campaignMetadata';
 
 // Helpers
 import { get } from './helper';
 import { addressCodec, hashToHexString } from '../utils';
-import { getBody } from './body';
 
 // Types
 import { CampaignCreationData } from '../@types/pallets/crowdfunding/campaignCreationData';
+import { CampaignMetadata as CampaignIpfsMetadata } from '../@types/ipfs/campaignMetadata';
 
 // Functions
 function getCampaign(store: Store, campaignId: string): Promise<Campaign | null> {
@@ -23,6 +25,7 @@ async function createCampaign(
 	campaignId: string,
 	signer: string,
 	data: CampaignCreationData,
+	metadata: CampaignIpfsMetadata,
 ): Promise<Campaign | null> {
 	// Check if exists
 	let campaign = await getCampaign(store, campaignId);
@@ -55,6 +58,8 @@ async function createCampaign(
 
 	campaign.isFinished = false;
 	campaign.isFunded = false;
+
+	campaign.metadata = await upsertCampaignMetadata(store, campaign.cid, metadata);
 
 	// Save campaign
 	await store.save(campaign);

@@ -29,7 +29,6 @@ async function upsertBodyMetadata(store: Store, bodyMetadataId: string, data: Bo
 	bodyMetadata.email = data?.email ?? '';
 	bodyMetadata.repo = data?.repo ?? '';
 	bodyMetadata.logo = data?.logo ?? '';
-	bodyMetadata.header = data?.header ?? '';
 
 	// Save metadata
 	await store.save(bodyMetadata);

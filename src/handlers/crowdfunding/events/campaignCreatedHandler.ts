@@ -1,5 +1,6 @@
 // Imports
 import { hashToHexString } from '../../../utils';
+import { fetchCampaignMetadata } from '../../../ipfs/campaign';
 
 // 3rd
 import { EventHandlerContext } from '@subsquid/substrate-processor';
@@ -32,8 +33,16 @@ async function handleCampaignCreatedEvent(context: EventHandlerContext) {
 		return;
 	}
 
+	// Load body metadata
+	const cid = callCreateData.cid.toString();
+	const metadata = await fetchCampaignMetadata(cid);
+	if (!metadata) {
+		console.error(`Couldn't fetch metadata of campaign ${id} cid ${cid}`);
+		return;
+	}
+
 	// Create campaign
-	await createCampaign(context.store, id, context.extrinsic.signer, callCreateData);
+	await createCampaign(context.store, id, context.extrinsic.signer, callCreateData, metadata);
 }
 
 function getCreateData(context: EventHandlerContext): CampaignCreationData | null {
