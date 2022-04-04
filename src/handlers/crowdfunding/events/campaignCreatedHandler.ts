@@ -55,6 +55,9 @@ async function handleCampaignCreatedEvent(context: EventHandlerContext) {
 	campaign.tokenSymbol = callCreateData.tokenSymbol.toString();
 	campaign.tokenName = callCreateData.tokenName.toString();
 
+	campaign.isFinished = false;
+	campaign.isFunded = false;
+
 	await context.store.save(campaign);
 }
 

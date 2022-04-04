@@ -50,6 +50,9 @@ type Campaign @entity {
     tokenSymbol: String!
     tokenName: String!
 
+    isFinished: Boolean!
+    isFunded: Boolean!
+
     contributors: [CampaignContributor]! @derivedFrom(field: "campaign")
 }
 

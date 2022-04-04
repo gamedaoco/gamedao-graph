@@ -126,6 +126,56 @@ export class GameDaoCrowdfundingCampaignCreatedEvent {
   }
 }
 
+export class GameDaoCrowdfundingCampaignFailedEvent {
+  constructor(private ctx: EventContext) {
+    assert(this.ctx.event.name === 'gameDaoCrowdfunding.CampaignFailed')
+  }
+
+  get isV21(): boolean {
+    return this.ctx._chain.getEventHash('gameDaoCrowdfunding.CampaignFailed') === '5771dc790d21a60eada1fed9fe01e3921899804c33051fa0b079b7dffee8f2d2'
+  }
+
+  get asV21(): [Uint8Array, bigint, number, boolean] {
+    assert(this.isV21)
+    return this.ctx._chain.decodeEvent(this.ctx.event)
+  }
+
+  get isLatest(): boolean {
+    deprecateLatest()
+    return this.isV21
+  }
+
+  get asLatest(): [Uint8Array, bigint, number, boolean] {
+    deprecateLatest()
+    return this.asV21
+  }
+}
+
+export class GameDaoCrowdfundingCampaignFinalizedEvent {
+  constructor(private ctx: EventContext) {
+    assert(this.ctx.event.name === 'gameDaoCrowdfunding.CampaignFinalized')
+  }
+
+  get isV21(): boolean {
+    return this.ctx._chain.getEventHash('gameDaoCrowdfunding.CampaignFinalized') === 'fc7b7ab985e3c18f5998cfa1ace7c5892eddee0284f6b9f63a5b5551bac3047e'
+  }
+
+  get asV21(): [Uint8Array, bigint, number, boolean] {
+    assert(this.isV21)
+    return this.ctx._chain.decodeEvent(this.ctx.event)
+  }
+
+  get isLatest(): boolean {
+    deprecateLatest()
+    return this.isV21
+  }
+
+  get asLatest(): [Uint8Array, bigint, number, boolean] {
+    deprecateLatest()
+    return this.asV21
+  }
+}
+
 export class IdentityIdentitySetEvent {
   constructor(private ctx: EventContext) {
     assert(this.ctx.event.name === 'identity.IdentitySet')

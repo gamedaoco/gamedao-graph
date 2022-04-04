@@ -4,16 +4,18 @@ import { addressCodec, hashToHexString } from '../../../utils';
 // 3rd
 import { EventHandlerContext } from '@subsquid/substrate-processor';
 
-// Types
-import { GameDaoCrowdfundingCampaignContributedEvent } from '../../../types/events';
+// Database
 import { addCampaignContributorContribution } from '../../../database/campaignContributor';
 
+// Types
+import { GameDaoCrowdfundingCampaignContributedEvent } from '../../../types/events';
+
 // Functions
-async function handleCampaignContributed(context: EventHandlerContext) {
+async function handleCampaignContributedEvent(context: EventHandlerContext) {
 	// Get versioned instance
 	const campaignCreatedEventData = new GameDaoCrowdfundingCampaignContributedEvent(context);
 
-	// Create model
+	// Define data
 	let campaignId: string | null = null;
 	let contributorAddress: string | null = null;
 	let contribution: bigint | null = null;
@@ -33,4 +35,4 @@ async function handleCampaignContributed(context: EventHandlerContext) {
 }
 
 // Exports
-export { handleCampaignContributed };
+export { handleCampaignContributedEvent };

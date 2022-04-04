@@ -42,10 +42,8 @@ async function addCampaignContributorContribution(
 		campaignContributor.address = contributor;
 		campaignContributor.identity = await createOrUpdateIdentity(store, contributor, null);
 		campaignContributor.contributed = contribution;
-		console.log('set', contributor, contribution);
 	} else {
 		campaignContributor.contributed += contribution;
-		console.log('add', contributor, contribution);
 	}
 
 	// Save contributor

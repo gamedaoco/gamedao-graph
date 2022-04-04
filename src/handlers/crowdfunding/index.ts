@@ -1,6 +1,8 @@
 // Imports
 import { handleCampaignCreatedEvent } from './events/campaignCreatedHandler';
-import { handleCampaignContributed } from './events/campaignContributedHandler';
+import { handleCampaignContributedEvent } from './events/campaignContributedHandler';
+import { handleCampaignFailedEvent } from './events/campaignFailedHandler';
+import { handleCampaignFinalizedEvent } from './events/campaignFinalizedHandler';
 
 // Types
 import { IPallet } from '../../@types/palletHandler';
@@ -16,7 +18,15 @@ export default {
 		},
 		{
 			action: 'CampaignContributed',
-			handler: handleCampaignContributed,
+			handler: handleCampaignContributedEvent,
+		},
+		{
+			action: 'CampaignFailed',
+			handler: handleCampaignFailedEvent,
+		},
+		{
+			action: 'CampaignFinalized',
+			handler: handleCampaignFinalizedEvent,
 		},
 	],
 } as IPallet;

@@ -46,6 +46,12 @@ export class Campaign {
   @Column_("text", {nullable: false})
   tokenName!: string
 
+  @Column_("bool", {nullable: false})
+  isFinished!: boolean
+
+  @Column_("bool", {nullable: false})
+  isFunded!: boolean
+
   @OneToMany_(() => CampaignContributor, e => e.campaign)
   contributors!: CampaignContributor[]
 }
