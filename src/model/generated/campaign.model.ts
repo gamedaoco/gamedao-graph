@@ -1,6 +1,7 @@
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, ManyToOne as ManyToOne_, Index as Index_} from "typeorm"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, ManyToOne as ManyToOne_, Index as Index_, OneToMany as OneToMany_} from "typeorm"
 import * as marshal from "./marshal"
 import {Body} from "./body.model"
+import {CampaignContributor} from "./campaignContributor.model"
 
 @Entity_()
 export class Campaign {
@@ -44,4 +45,7 @@ export class Campaign {
 
   @Column_("text", {nullable: false})
   tokenName!: string
+
+  @OneToMany_(() => CampaignContributor, e => e.campaign)
+  contributors!: CampaignContributor[]
 }

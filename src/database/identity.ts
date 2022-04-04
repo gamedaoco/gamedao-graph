@@ -29,6 +29,7 @@ async function createOrUpdateIdentity(
 	if (!entity) {
 		entity = new Identity();
 		entity.id = identity;
+		entity.address = identity;
 	}
 
 	// Set data

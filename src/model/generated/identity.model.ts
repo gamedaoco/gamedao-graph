@@ -1,5 +1,6 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, OneToMany as OneToMany_} from "typeorm"
 import {BodyMember} from "./bodyMember.model"
+import {CampaignContributor} from "./campaignContributor.model"
 
 @Entity_()
 export class Identity {
@@ -9,6 +10,9 @@ export class Identity {
 
   @PrimaryColumn_()
   id!: string
+
+  @Column_("text", {nullable: false})
+  address!: string
 
   @Column_("text", {nullable: true})
   displayName!: string | undefined | null
@@ -30,4 +34,7 @@ export class Identity {
 
   @OneToMany_(() => BodyMember, e => e.identity)
   bodyMembers!: BodyMember[]
+
+  @OneToMany_(() => CampaignContributor, e => e.identity)
+  campaignContributors!: CampaignContributor[]
 }

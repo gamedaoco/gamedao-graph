@@ -7,7 +7,8 @@
     "gameDaoControl.AddMember",
     "gameDaoControl.RemoveMember",
     "identity.IdentitySet",
-    "gameDaoCrowdfunding.CampaignCreated"
+    "gameDaoCrowdfunding.CampaignCreated",
+    "gameDaoCrowdfunding.CampaignContributed"
   ],
   "calls": [
     "gameDaoControl.create",

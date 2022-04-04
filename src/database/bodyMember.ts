@@ -18,7 +18,7 @@ function getBodyMember(store: Store, body: string, member: string): Promise<Body
 }
 
 async function addBodyMember(store: Store, body: string, member: string) {
-	// Check if address already member
+	// Check if address is already member
 	if (await getBodyMember(store, body, member)) return;
 
 	// Get body model

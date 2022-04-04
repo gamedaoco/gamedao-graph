@@ -1,5 +1,6 @@
 type Identity @entity {
     id: ID!
+    address: String!
     displayName: String
     legalName: String
     email: String
@@ -8,6 +9,7 @@ type Identity @entity {
     twitter: String
 
     bodyMembers: [BodyMember!]! @derivedFrom(field: "identity")
+    campaignContributors: [CampaignContributor!]! @derivedFrom(field: "identity")
 }
 
 type Body @entity {
@@ -47,4 +49,16 @@ type Campaign @entity {
     cid: String!
     tokenSymbol: String!
     tokenName: String!
+
+    contributors: [CampaignContributor]! @derivedFrom(field: "campaign")
+}
+
+type CampaignContributor @entity {
+    id: ID!
+    campaign: Campaign!
+
+    address: String!
+    identity: Identity!
+
+    contributed: BigInt!
 }

@@ -76,6 +76,31 @@ export class GameDaoControlRemoveMemberEvent {
   }
 }
 
+export class GameDaoCrowdfundingCampaignContributedEvent {
+  constructor(private ctx: EventContext) {
+    assert(this.ctx.event.name === 'gameDaoCrowdfunding.CampaignContributed')
+  }
+
+  get isV21(): boolean {
+    return this.ctx._chain.getEventHash('gameDaoCrowdfunding.CampaignContributed') === '9b10be041d2cd8d94f44d5fa84145f0876b2250cfd95b4e519dc0820392f9624'
+  }
+
+  get asV21(): [Uint8Array, Uint8Array, bigint, number] {
+    assert(this.isV21)
+    return this.ctx._chain.decodeEvent(this.ctx.event)
+  }
+
+  get isLatest(): boolean {
+    deprecateLatest()
+    return this.isV21
+  }
+
+  get asLatest(): [Uint8Array, Uint8Array, bigint, number] {
+    deprecateLatest()
+    return this.asV21
+  }
+}
+
 export class GameDaoCrowdfundingCampaignCreatedEvent {
   constructor(private ctx: EventContext) {
     assert(this.ctx.event.name === 'gameDaoCrowdfunding.CampaignCreated')
