@@ -11,33 +11,33 @@ import { getCampaign } from './campaign';
 import { get } from './helper';
 
 // Functions
-const getContributorId = (campaign: string, contributor: string) => `${campaign}-${contributor}`.toLowerCase();
+const getContributorId = (campaignId: string, contributor: string) => `${campaignId}-${contributor}`.toLowerCase();
 
 function getCampaignContributor(
 	store: Store,
-	campaign: string,
+	campaignId: string,
 	contributor: string,
 ): Promise<CampaignContributor | null> {
-	return get(store, CampaignContributor, getContributorId(campaign, contributor));
+	return get(store, CampaignContributor, getContributorId(campaignId, contributor));
 }
 
 async function addCampaignContributorContribution(
 	store: Store,
-	campaign: string,
+	campaignId: string,
 	contributor: string,
 	contribution: bigint,
 ) {
 	// Load contributor
-	let campaignContributor = await getCampaignContributor(store, campaign, contributor);
+	let campaignContributor = await getCampaignContributor(store, campaignId, contributor);
 	if (!campaignContributor) {
 		// Get campaign model
-		const campaignModel = await getCampaign(store, campaign);
+		const campaignModel = await getCampaign(store, campaignId);
 		if (!campaignModel) return;
 
 		// Create contributor
 		campaignContributor = new CampaignContributor();
 
-		campaignContributor.id = getContributorId(campaign, contributor);
+		campaignContributor.id = getContributorId(campaignId, contributor);
 		campaignContributor.campaign = campaignModel;
 		campaignContributor.address = contributor;
 		campaignContributor.identity = await createOrUpdateIdentity(store, contributor, null);

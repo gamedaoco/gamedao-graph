@@ -1,12 +1,11 @@
 // Imports
-import { addressCodec, hashToHexString } from '../../../utils';
+import { hashToHexString } from '../../../utils';
 
 // 3rd
 import { EventHandlerContext } from '@subsquid/substrate-processor';
 
 // Database
-import { Campaign } from '../../../model';
-import { getBody } from '../../../database/body';
+import { createCampaign } from '../../../database/campaign';
 
 // Types
 import { GameDaoCrowdfundingCampaignCreatedEvent } from '../../../types/events';
@@ -24,41 +23,17 @@ async function handleCampaignCreatedEvent(context: EventHandlerContext) {
 	// Get versioned instance
 	const campaignCreatedEventData = new GameDaoCrowdfundingCampaignCreatedEvent(context);
 
-	// Create campaign
-	const campaign = new Campaign();
-
 	// Get id
+	let id;
 	if (campaignCreatedEventData.isV21) {
-		campaign.id = hashToHexString(campaignCreatedEventData.asV21[0]);
+		id = hashToHexString(campaignCreatedEventData.asV21[0]);
 	} else {
 		console.error(`Unknown version of campaign created event!`);
 		return;
 	}
 
-	// Get body
-	const bodyHash = hashToHexString(callCreateData.org);
-	const body = await getBody(context.store, bodyHash);
-	if (!body) {
-		console.error(`Unknown organization ${bodyHash} for campaign ${campaign.id}`);
-		return;
-	}
-
-	campaign.body = body;
-	campaign.admin = addressCodec.encode(callCreateData.admin);
-	campaign.creator = context.extrinsic.signer;
-	campaign.target = callCreateData.target;
-	campaign.deposit = callCreateData.deposit;
-	campaign.expiry = callCreateData.expiry;
-	campaign.protocol = callCreateData.protocol;
-	campaign.governance = callCreateData.governance;
-	campaign.cid = callCreateData.cid.toString();
-	campaign.tokenSymbol = callCreateData.tokenSymbol.toString();
-	campaign.tokenName = callCreateData.tokenName.toString();
-
-	campaign.isFinished = false;
-	campaign.isFunded = false;
-
-	await context.store.save(campaign);
+	// Create campaign
+	await createCampaign(context.store, id, context.extrinsic.signer, callCreateData);
 }
 
 function getCreateData(context: EventHandlerContext): CampaignCreationData | null {

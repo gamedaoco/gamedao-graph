@@ -23,6 +23,7 @@
     "@subsquid/ss58": "^0.0.4",
     "@subsquid/substrate-processor": "^0.3.0",
     "@zeroio/type-definitions": "0.0.14",
+    "await-to-js": "^3.0.0",
     "bignumber.js": "^9.0.2",
     "dotenv": "^16.0.0",
     "pg": "^8.7.1",

@@ -11,24 +11,24 @@ import { getBody } from './body';
 import { get } from './helper';
 
 // Functions
-const getMemberId = (body: string, member: string) => `${body}-${member}`.toLowerCase();
+const getMemberId = (bodyId: string, member: string) => `${bodyId}-${member}`.toLowerCase();
 
-function getBodyMember(store: Store, body: string, member: string): Promise<BodyMember | null> {
-	return get(store, BodyMember, getMemberId(body, member));
+function getBodyMember(store: Store, bodyId: string, member: string): Promise<BodyMember | null> {
+	return get(store, BodyMember, getMemberId(bodyId, member));
 }
 
-async function addBodyMember(store: Store, body: string, member: string) {
+async function addBodyMember(store: Store, bodyId: string, member: string) {
 	// Check if address is already member
-	if (await getBodyMember(store, body, member)) return;
+	if (await getBodyMember(store, bodyId, member)) return;
 
 	// Get body model
-	const bodyModel = await getBody(store, body);
+	const bodyModel = await getBody(store, bodyId);
 	if (!bodyModel) return;
 
 	// Create membership
 	const bodyMember = new BodyMember();
 
-	bodyMember.id = getMemberId(body, member);
+	bodyMember.id = getMemberId(bodyId, member);
 	bodyMember.body = bodyModel;
 	bodyMember.address = member;
 	bodyMember.identity = await createOrUpdateIdentity(store, member, null);

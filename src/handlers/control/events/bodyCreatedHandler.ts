@@ -1,17 +1,17 @@
 // Imports
-import { addressCodec, hashToHexString } from '../../../utils';
+import { hashToHexString } from '../../../utils';
 
 // 3rd
 import { EventHandlerContext } from '@subsquid/substrate-processor';
 
 // Database
-import { Body } from '../../../model';
+import { addBodyMember } from '../../../database/bodyMember';
+import { createBody } from '../../../database/body';
 
 // Types
 import { BodyCreationData } from '../../../@types/pallets/control/bodyCreationData';
 import { GameDaoControlBodyCreatedEvent } from '../../../types/events';
 import { GameDaoControlCreateCall } from '../../../types/calls';
-import { addBodyMember } from '../../../database/bodyMember';
 
 // Logic
 async function handleBodyCreatedEvent(context: EventHandlerContext) {
@@ -24,31 +24,19 @@ async function handleBodyCreatedEvent(context: EventHandlerContext) {
 	// Get versioned instance
 	const bodyCreatedEventData = new GameDaoControlBodyCreatedEvent(context);
 
-	// Create body
-	const body = new Body();
-
 	// Get id
+	let id;
 	if (bodyCreatedEventData.isV21) {
-		body.id = hashToHexString(bodyCreatedEventData.asV21[1]);
+		id = hashToHexString(bodyCreatedEventData.asV21[1]);
 	} else {
 		console.error(`Unknown version of body created event!`);
 		return;
 	}
 
-	body.creator = context.extrinsic.signer;
-	body.controller = addressCodec.encode(callCreateData.controller);
-	body.treasury = addressCodec.encode(callCreateData.treasury);
-	body.cid = callCreateData.cid.toString();
-	body.body = callCreateData.body;
-	body.access = callCreateData.access;
-	body.feeModel = callCreateData.feeModel;
-	body.fee = callCreateData.fee;
-	body.govAsset = callCreateData.govAsset;
-	body.payAsset = callCreateData.payAsset;
-	body.memberLimit = callCreateData.memberLimit;
+	// Create body
+	const body = await createBody(context.store, id, context.extrinsic.signer, callCreateData);
 
-	await context.store.save(body);
-
+	// Add initial member (creator of DAO)
 	await addBodyMember(context.store, body.id, body.creator);
 }
 
