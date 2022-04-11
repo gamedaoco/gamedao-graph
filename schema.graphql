@@ -10,13 +10,17 @@ type Identity @entity {
 
     bodyMembers: [BodyMember!]! @derivedFrom(field: "identity")
     campaignContributors: [CampaignContributor!]! @derivedFrom(field: "identity")
+    proposals: [Proposal!]! @derivedFrom(field: "creatorIdentity")
 }
 
 type Body @entity {
     id: ID!
     creator: String!
+    creatorIdentity: Identity!
     controller: String!
+    controllerIdentity: Identity!
     treasury: String!
+    treasuryIdentity: Identity!
     cid: String!
     body: Int!
     access: Int!
@@ -51,7 +55,9 @@ type Campaign @entity {
     id: ID!
     body: Body!
     creator: String!
+    creatorIdentity: Identity!
     admin: String!
+    adminIdentity: Identity!
     target: BigInt!
     deposit: BigInt!
     expiry: Int!
@@ -88,3 +94,36 @@ type CampaignContributor @entity {
 
     contributed: BigInt!
 }
+
+type Proposal @entity {
+    id: ID!
+    body: Body!
+    campaign: Campaign
+
+    creator: String!
+    creatorIdentity: Identity!
+
+    cid: String!
+
+    type: Int!
+    data: ProposalTypeData!
+
+    # ToDo: how to save collateral and is it enough to have "approvers" and "deniers"? (For later, currently we only support simple votes)
+    # Maybe just make an union like ProposalTypeData (Data abstraction to different types)
+    votingType: Int!
+    approvers: BigInt!
+    deniers: BigInt!
+
+    expiryBlock: Int!
+}
+
+type ProposalTypeGeneralData {
+    type: Int!
+}
+
+type ProposalTypeWithdrawalData {
+    type: Int!
+    amount: BigInt!
+}
+
+union ProposalTypeData = ProposalTypeGeneralData | ProposalTypeWithdrawalData

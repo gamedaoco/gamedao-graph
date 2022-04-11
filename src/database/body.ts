@@ -5,6 +5,7 @@ import { Store } from '@subsquid/substrate-processor';
 // Database
 import { Body } from '../model';
 import { get } from './helper';
+import { createOrUpdateIdentity } from './identity';
 
 // Types
 import { BodyCreationData } from '../@types/pallets/control/bodyCreationData';
@@ -16,7 +17,7 @@ import { upsertBodyMetadata } from './bodyMetadata';
 
 // Functions
 function getBody(store: Store, bodyId: string): Promise<Body | null> {
-	return get(store, Body, bodyId);
+	return get(store, Body, bodyId, ['creatorIdentity', 'metadata']);
 }
 
 async function createBody(
@@ -36,8 +37,11 @@ async function createBody(
 	// Fill data
 	body.id = bodyId;
 	body.creator = signer;
+	body.creatorIdentity = await createOrUpdateIdentity(store, signer, null);
 	body.controller = addressCodec.encode(data.controller);
+	body.controllerIdentity = await createOrUpdateIdentity(store, body.controller, null);
 	body.treasury = addressCodec.encode(data.treasury);
+	body.treasuryIdentity = await createOrUpdateIdentity(store, body.treasury, null);
 	body.cid = data.cid.toString();
 	body.body = data.body;
 	body.access = data.access;

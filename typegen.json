@@ -10,10 +10,14 @@
     "gameDaoCrowdfunding.CampaignCreated",
     "gameDaoCrowdfunding.CampaignContributed",
     "gameDaoCrowdfunding.CampaignFailed",
-    "gameDaoCrowdfunding.CampaignFinalized"
+    "gameDaoCrowdfunding.CampaignFinalized",
+    "gameDaoGovernance.ProposalCreated",
+    "gameDaoGovernance.Proposal"
   ],
   "calls": [
     "gameDaoControl.create",
-    "gameDaoCrowdfunding.create"
+    "gameDaoCrowdfunding.create",
+    "gameDaoGovernance.general_proposal",
+    "gameDaoGovernance.withdraw_proposal"
   ]
 }

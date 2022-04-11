@@ -18,7 +18,7 @@ function getCampaignContributor(
 	campaignId: string,
 	contributor: string,
 ): Promise<CampaignContributor | null> {
-	return get(store, CampaignContributor, getContributorId(campaignId, contributor));
+	return get(store, CampaignContributor, getContributorId(campaignId, contributor), ['campaign', 'identity']);
 }
 
 async function addCampaignContributorContribution(

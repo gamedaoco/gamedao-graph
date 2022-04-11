@@ -6,6 +6,7 @@ import { Store } from '@subsquid/substrate-processor';
 import { Campaign } from '../model';
 import { getBody } from './body';
 import { upsertCampaignMetadata } from './campaignMetadata';
+import { createOrUpdateIdentity } from './identity';
 
 // Helpers
 import { get } from './helper';
@@ -17,7 +18,7 @@ import { CampaignMetadata as CampaignIpfsMetadata } from '../@types/ipfs/campaig
 
 // Functions
 function getCampaign(store: Store, campaignId: string): Promise<Campaign | null> {
-	return get(store, Campaign, campaignId);
+	return get(store, Campaign, campaignId, ['body', 'creatorIdentity', 'metadata']);
 }
 
 async function createCampaign(
@@ -46,7 +47,9 @@ async function createCampaign(
 	campaign.id = campaignId;
 	campaign.body = body;
 	campaign.admin = addressCodec.encode(data.admin);
+	campaign.adminIdentity = await createOrUpdateIdentity(store, campaign.admin, null);
 	campaign.creator = signer;
+	campaign.creatorIdentity = await createOrUpdateIdentity(store, signer, null);
 	campaign.target = data.target;
 	campaign.deposit = data.deposit;
 	campaign.expiry = data.expiry;

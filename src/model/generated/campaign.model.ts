@@ -1,6 +1,7 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, ManyToOne as ManyToOne_, Index as Index_, OneToMany as OneToMany_} from "typeorm"
 import * as marshal from "./marshal"
 import {Body} from "./body.model"
+import {Identity} from "./identity.model"
 import {CampaignMetadata} from "./campaignMetadata.model"
 import {CampaignContributor} from "./campaignContributor.model"
 
@@ -20,8 +21,16 @@ export class Campaign {
   @Column_("text", {nullable: false})
   creator!: string
 
+  @Index_()
+  @ManyToOne_(() => Identity, {nullable: false})
+  creatorIdentity!: Identity
+
   @Column_("text", {nullable: false})
   admin!: string
+
+  @Index_()
+  @ManyToOne_(() => Identity, {nullable: false})
+  adminIdentity!: Identity
 
   @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
   target!: bigint

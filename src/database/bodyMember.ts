@@ -14,7 +14,7 @@ import { get } from './helper';
 const getMemberId = (bodyId: string, member: string) => `${bodyId}-${member}`.toLowerCase();
 
 function getBodyMember(store: Store, bodyId: string, member: string): Promise<BodyMember | null> {
-	return get(store, BodyMember, getMemberId(bodyId, member));
+	return get(store, BodyMember, getMemberId(bodyId, member), ['body', 'identity']);
 }
 
 async function addBodyMember(store: Store, bodyId: string, member: string) {

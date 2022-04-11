@@ -9,6 +9,7 @@ export async function get<TModel>(
 	store: Store,
 	entityConstructor: EntityConstructor<TModel>,
 	id: string,
+	relations: string[] = [],
 ): Promise<TModel | null> {
-	return (await store.findOne<TModel>(entityConstructor, id)) ?? null;
+	return (await store.findOne<TModel>(entityConstructor, id, { relations })) ?? null;
 }

@@ -1,5 +1,6 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, ManyToOne as ManyToOne_, Index as Index_, OneToMany as OneToMany_} from "typeorm"
 import * as marshal from "./marshal"
+import {Identity} from "./identity.model"
 import {BodyMetadata} from "./bodyMetadata.model"
 import {BodyMember} from "./bodyMember.model"
 import {Campaign} from "./campaign.model"
@@ -16,11 +17,23 @@ export class Body {
   @Column_("text", {nullable: false})
   creator!: string
 
+  @Index_()
+  @ManyToOne_(() => Identity, {nullable: false})
+  creatorIdentity!: Identity
+
   @Column_("text", {nullable: false})
   controller!: string
 
+  @Index_()
+  @ManyToOne_(() => Identity, {nullable: false})
+  controllerIdentity!: Identity
+
   @Column_("text", {nullable: false})
   treasury!: string
+
+  @Index_()
+  @ManyToOne_(() => Identity, {nullable: false})
+  treasuryIdentity!: Identity
 
   @Column_("text", {nullable: false})
   cid!: string

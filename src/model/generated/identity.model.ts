@@ -1,6 +1,7 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, OneToMany as OneToMany_} from "typeorm"
 import {BodyMember} from "./bodyMember.model"
 import {CampaignContributor} from "./campaignContributor.model"
+import {Proposal} from "./proposal.model"
 
 @Entity_()
 export class Identity {
@@ -37,4 +38,7 @@ export class Identity {
 
   @OneToMany_(() => CampaignContributor, e => e.identity)
   campaignContributors!: CampaignContributor[]
+
+  @OneToMany_(() => Proposal, e => e.creatorIdentity)
+  proposals!: Proposal[]
 }

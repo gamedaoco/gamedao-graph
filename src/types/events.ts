@@ -176,6 +176,56 @@ export class GameDaoCrowdfundingCampaignFinalizedEvent {
   }
 }
 
+export class GameDaoGovernanceProposalEvent {
+  constructor(private ctx: EventContext) {
+    assert(this.ctx.event.name === 'gameDaoGovernance.Proposal')
+  }
+
+  get isV22(): boolean {
+    return this.ctx._chain.getEventHash('gameDaoGovernance.Proposal') === '3c5af36af321b1be921a121b3a018ee7e42e82e1ed09d167b4d7f8eedeea0001'
+  }
+
+  get asV22(): [Uint8Array, Uint8Array] {
+    assert(this.isV22)
+    return this.ctx._chain.decodeEvent(this.ctx.event)
+  }
+
+  get isLatest(): boolean {
+    deprecateLatest()
+    return this.isV22
+  }
+
+  get asLatest(): [Uint8Array, Uint8Array] {
+    deprecateLatest()
+    return this.asV22
+  }
+}
+
+export class GameDaoGovernanceProposalCreatedEvent {
+  constructor(private ctx: EventContext) {
+    assert(this.ctx.event.name === 'gameDaoGovernance.ProposalCreated')
+  }
+
+  get isV21(): boolean {
+    return this.ctx._chain.getEventHash('gameDaoGovernance.ProposalCreated') === '9f0126fc76692639b46d743488b2bbb281d2c637911475818d1554824fa3fdf9'
+  }
+
+  get asV21(): [Uint8Array, Uint8Array, Uint8Array, bigint, number] {
+    assert(this.isV21)
+    return this.ctx._chain.decodeEvent(this.ctx.event)
+  }
+
+  get isLatest(): boolean {
+    deprecateLatest()
+    return this.isV21
+  }
+
+  get asLatest(): [Uint8Array, Uint8Array, Uint8Array, bigint, number] {
+    deprecateLatest()
+    return this.asV21
+  }
+}
+
 export class IdentityIdentitySetEvent {
   constructor(private ctx: EventContext) {
     assert(this.ctx.event.name === 'identity.IdentitySet')
