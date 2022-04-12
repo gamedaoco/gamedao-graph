@@ -1,6 +1,7 @@
 // Imports
 import { handleProposalCreatedEvent } from './events/proposalCreatedHandler';
 import { handleProposalEvent } from './events/proposalHandler';
+import { handleProposalVotedEvent } from './events/proposalVotedHandler';
 import { handleProposalExpiredEvent } from './events/proposalExpiredHandler';
 import { handleProposalRejectedEvent } from './events/proposalRejectedHandler';
 import { handleProposalApprovedEvent } from './events/proposalApprovedHandler';
@@ -20,6 +21,10 @@ export default {
 		{
 			action: 'ProposalCreated',
 			handler: handleProposalCreatedEvent,
+		},
+		{
+			action: 'ProposalVoted',
+			handler: handleProposalVotedEvent,
 		},
 		{
 			action: 'ProposalExpired',

@@ -1,7 +1,10 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, OneToMany as OneToMany_} from "typeorm"
+import {Body} from "./body.model"
 import {BodyMember} from "./bodyMember.model"
+import {Campaign} from "./campaign.model"
 import {CampaignContributor} from "./campaignContributor.model"
 import {Proposal} from "./proposal.model"
+import {ProposalVoter} from "./proposalVoter.model"
 
 @Entity_()
 export class Identity {
@@ -33,12 +36,24 @@ export class Identity {
   @Column_("text", {nullable: true})
   twitter!: string | undefined | null
 
+  @OneToMany_(() => Body, e => e.creatorIdentity)
+  createdBodies!: Body[]
+
+  @OneToMany_(() => Body, e => e.controllerIdentity)
+  controllerBodies!: Body[]
+
   @OneToMany_(() => BodyMember, e => e.identity)
   bodyMembers!: BodyMember[]
+
+  @OneToMany_(() => Campaign, e => e.creatorIdentity)
+  createdCampaigns!: Campaign[]
 
   @OneToMany_(() => CampaignContributor, e => e.identity)
   campaignContributors!: CampaignContributor[]
 
   @OneToMany_(() => Proposal, e => e.creatorIdentity)
-  proposals!: Proposal[]
+  createdProposals!: Proposal[]
+
+  @OneToMany_(() => ProposalVoter, e => e.identity)
+  proposalVoters!: ProposalVoter[]
 }

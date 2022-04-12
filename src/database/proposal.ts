@@ -10,8 +10,6 @@ import { get } from './helper';
 // Types
 import { ProposalCreationData } from '../@types/pallets/governance/proposalCreationData';
 
-// Helpers
-
 // Functions
 function getProposal(store: Store, proposalId: string): Promise<Proposal | null> {
 	return get(store, Proposal, proposalId, ['body', 'campaign', 'creatorIdentity']);
