@@ -201,6 +201,31 @@ export class GameDaoGovernanceProposalEvent {
   }
 }
 
+export class GameDaoGovernanceProposalApprovedEvent {
+  constructor(private ctx: EventContext) {
+    assert(this.ctx.event.name === 'gameDaoGovernance.ProposalApproved')
+  }
+
+  get isV27(): boolean {
+    return this.ctx._chain.getEventHash('gameDaoGovernance.ProposalApproved') === 'e9338f87ed51bf57220fcbf4d1e9e8f8f4fa3169661a81ac8c3777807b20aff4'
+  }
+
+  get asV27(): Uint8Array {
+    assert(this.isV27)
+    return this.ctx._chain.decodeEvent(this.ctx.event)
+  }
+
+  get isLatest(): boolean {
+    deprecateLatest()
+    return this.isV27
+  }
+
+  get asLatest(): Uint8Array {
+    deprecateLatest()
+    return this.asV27
+  }
+}
+
 export class GameDaoGovernanceProposalCreatedEvent {
   constructor(private ctx: EventContext) {
     assert(this.ctx.event.name === 'gameDaoGovernance.ProposalCreated')
@@ -223,6 +248,99 @@ export class GameDaoGovernanceProposalCreatedEvent {
   get asLatest(): [Uint8Array, Uint8Array, Uint8Array, bigint, number] {
     deprecateLatest()
     return this.asV21
+  }
+}
+
+export class GameDaoGovernanceProposalExpiredEvent {
+  constructor(private ctx: EventContext) {
+    assert(this.ctx.event.name === 'gameDaoGovernance.ProposalExpired')
+  }
+
+  get isV33(): boolean {
+    return this.ctx._chain.getEventHash('gameDaoGovernance.ProposalExpired') === '92894a2f2f2ff7c12b13e204a2740a39e067ba8e710faf8a70a57c40706f85c3'
+  }
+
+  get asV33(): Uint8Array {
+    assert(this.isV33)
+    return this.ctx._chain.decodeEvent(this.ctx.event)
+  }
+
+  get isLatest(): boolean {
+    deprecateLatest()
+    return this.isV33
+  }
+
+  get asLatest(): Uint8Array {
+    deprecateLatest()
+    return this.asV33
+  }
+}
+
+export class GameDaoGovernanceProposalRejectedEvent {
+  constructor(private ctx: EventContext) {
+    assert(this.ctx.event.name === 'gameDaoGovernance.ProposalRejected')
+  }
+
+  get isV27(): boolean {
+    return this.ctx._chain.getEventHash('gameDaoGovernance.ProposalRejected') === '4bd8f920581a99859e61d406bc5ca8526fb47526023bd489066b10fd1d2306f1'
+  }
+
+  get asV27(): Uint8Array {
+    assert(this.isV27)
+    return this.ctx._chain.decodeEvent(this.ctx.event)
+  }
+
+  get isLatest(): boolean {
+    deprecateLatest()
+    return this.isV27
+  }
+
+  get asLatest(): Uint8Array {
+    deprecateLatest()
+    return this.asV27
+  }
+}
+
+export class GameDaoGovernanceProposalVotedEvent {
+  constructor(private ctx: EventContext) {
+    assert(this.ctx.event.name === 'gameDaoGovernance.ProposalVoted')
+  }
+
+  get isV21(): boolean {
+    return this.ctx._chain.getEventHash('gameDaoGovernance.ProposalVoted') === '0c437d891eca48d271c84d41ffa9333bfe9a27feb59e587069ef1a2a310f4bd8'
+  }
+
+  get asV21(): [Uint8Array, Uint8Array] {
+    assert(this.isV21)
+    return this.ctx._chain.decodeEvent(this.ctx.event)
+  }
+
+  get isV24(): boolean {
+    return this.ctx._chain.getEventHash('gameDaoGovernance.ProposalVoted') === '51c478dbb5b4ed01d4cf3cc7baffda188c0e6dafe0a9491c8c57fc224b9b5140'
+  }
+
+  get asV24(): [Uint8Array, Uint8Array, number] {
+    assert(this.isV24)
+    return this.ctx._chain.decodeEvent(this.ctx.event)
+  }
+
+  get isV40(): boolean {
+    return this.ctx._chain.getEventHash('gameDaoGovernance.ProposalVoted') === '9a85d65e760f413a1b7e959402bf70f62563ba03a08d830ded6d26cacf295d68'
+  }
+
+  get asV40(): [Uint8Array, Uint8Array, boolean] {
+    assert(this.isV40)
+    return this.ctx._chain.decodeEvent(this.ctx.event)
+  }
+
+  get isLatest(): boolean {
+    deprecateLatest()
+    return this.isV40
+  }
+
+  get asLatest(): [Uint8Array, Uint8Array, boolean] {
+    deprecateLatest()
+    return this.asV40
   }
 }
 

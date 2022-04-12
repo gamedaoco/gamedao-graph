@@ -12,7 +12,11 @@
     "gameDaoCrowdfunding.CampaignFailed",
     "gameDaoCrowdfunding.CampaignFinalized",
     "gameDaoGovernance.ProposalCreated",
-    "gameDaoGovernance.Proposal"
+    "gameDaoGovernance.Proposal",
+    "gameDaoGovernance.ProposalVoted",
+    "gameDaoGovernance.ProposalExpired",
+    "gameDaoGovernance.ProposalApproved",
+    "gameDaoGovernance.ProposalRejected"
   ],
   "calls": [
     "gameDaoControl.create",

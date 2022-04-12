@@ -3,9 +3,9 @@
 import { Store } from '@subsquid/substrate-processor';
 
 // Database
-import { Proposal, Body, ProposalTypeGeneralData, ProposalTypeWithdrawalData } from '../model';
-import { get } from './helper';
+import { Proposal, ProposalState, Body, ProposalTypeGeneralData, ProposalTypeWithdrawalData } from '../model';
 import { createOrUpdateIdentity } from './identity';
+import { get } from './helper';
 
 // Types
 import { ProposalCreationData } from '../@types/pallets/governance/proposalCreationData';
@@ -52,9 +52,12 @@ async function createProposal(store: Store, proposalId: string, signer: string, 
 			break;
 	}
 
-	proposal.votingType = 0; // only simple vote
+	proposal.votingType = 0; // ToDo: only simple vote currently
 	proposal.approvers = BigInt(0);
 	proposal.deniers = BigInt(0);
+
+	proposal.state = ProposalState.Voting;
+
 	proposal.expiryBlock = data.expiry;
 
 	// Save proposal
@@ -63,5 +66,19 @@ async function createProposal(store: Store, proposalId: string, signer: string, 
 	return proposal;
 }
 
+async function updateProposalState(store: Store, proposalId: string, state: ProposalState) {
+	// Get proposal
+	let proposal = await getProposal(store, proposalId);
+	if (!proposal) return proposal;
+
+	// Update
+	proposal.state = state;
+
+	// Save proposal
+	await store.save(proposal);
+
+	return proposal;
+}
+
 // Exports
-export { createProposal, getProposal };
+export { createProposal, updateProposalState, getProposal };

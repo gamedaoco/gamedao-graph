@@ -3,10 +3,10 @@
 import { Store } from '@subsquid/substrate-processor';
 
 // Database
-import { Campaign } from '../model';
-import { getBody } from './body';
+import { Campaign, CampaignState } from '../model';
 import { upsertCampaignMetadata } from './campaignMetadata';
 import { createOrUpdateIdentity } from './identity';
+import { getBody } from './body';
 
 // Helpers
 import { get } from './helper';
@@ -59,8 +59,7 @@ async function createCampaign(
 	campaign.tokenSymbol = data.tokenSymbol.toString();
 	campaign.tokenName = data.tokenName.toString();
 
-	campaign.isFinished = false;
-	campaign.isFunded = false;
+	campaign.state = CampaignState.Funding;
 
 	campaign.metadata = await upsertCampaignMetadata(store, campaign.cid, metadata);
 

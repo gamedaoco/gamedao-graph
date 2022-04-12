@@ -51,6 +51,12 @@ type BodyMember @entity {
     identity: Identity!
 }
 
+enum CampaignState {
+    Funding,
+    Failed,
+    Funded,
+}
+
 type Campaign @entity {
     id: ID!
     body: Body!
@@ -67,8 +73,7 @@ type Campaign @entity {
     tokenSymbol: String!
     tokenName: String!
 
-    isFinished: Boolean!
-    isFunded: Boolean!
+    state: CampaignState!
 
     metadata: CampaignMetadata!
     contributors: [CampaignContributor]! @derivedFrom(field: "campaign")
@@ -95,6 +100,13 @@ type CampaignContributor @entity {
     contributed: BigInt!
 }
 
+enum ProposalState {
+    Voting,
+    Expired,
+    Rejected,
+    Approved,
+}
+
 type Proposal @entity {
     id: ID!
     body: Body!
@@ -113,6 +125,8 @@ type Proposal @entity {
     votingType: Int!
     approvers: BigInt!
     deniers: BigInt!
+
+    state: ProposalState!
 
     expiryBlock: Int!
 }

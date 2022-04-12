@@ -5,6 +5,7 @@ import { hashToHexString } from '../../../utils';
 import { EventHandlerContext } from '@subsquid/substrate-processor';
 
 // Database
+import { CampaignState } from '../../../model';
 import { getCampaign } from '../../../database/campaign';
 
 // Types
@@ -33,8 +34,7 @@ async function handleCampaignFinalizedEvent(context: EventHandlerContext) {
 		return;
 	}
 
-	campaign.isFunded = true;
-	campaign.isFinished = true;
+	campaign.state = CampaignState.Funded;
 
 	// Save campaign
 	await context.store.save(campaign);

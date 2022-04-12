@@ -4,6 +4,7 @@ import {Body} from "./body.model"
 import {Campaign} from "./campaign.model"
 import {Identity} from "./identity.model"
 import {ProposalTypeData, fromJsonProposalTypeData} from "./_proposalTypeData"
+import {ProposalState} from "./_proposalState"
 
 @Entity_()
 export class Proposal {
@@ -46,6 +47,9 @@ export class Proposal {
 
   @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
   deniers!: bigint
+
+  @Column_("varchar", {length: 8, nullable: false})
+  state!: ProposalState
 
   @Column_("integer", {nullable: false})
   expiryBlock!: number

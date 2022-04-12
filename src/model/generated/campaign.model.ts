@@ -2,6 +2,7 @@ import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, M
 import * as marshal from "./marshal"
 import {Body} from "./body.model"
 import {Identity} from "./identity.model"
+import {CampaignState} from "./_campaignState"
 import {CampaignMetadata} from "./campaignMetadata.model"
 import {CampaignContributor} from "./campaignContributor.model"
 
@@ -56,11 +57,8 @@ export class Campaign {
   @Column_("text", {nullable: false})
   tokenName!: string
 
-  @Column_("bool", {nullable: false})
-  isFinished!: boolean
-
-  @Column_("bool", {nullable: false})
-  isFunded!: boolean
+  @Column_("varchar", {length: 7, nullable: false})
+  state!: CampaignState
 
   @Index_()
   @ManyToOne_(() => CampaignMetadata, {nullable: false})
