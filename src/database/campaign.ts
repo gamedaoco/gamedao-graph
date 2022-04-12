@@ -5,7 +5,7 @@ import { Store } from '@subsquid/substrate-processor';
 // Database
 import { Campaign, CampaignState } from '../model';
 import { upsertCampaignMetadata } from './campaignMetadata';
-import { createOrUpdateIdentity } from './identity';
+import { upsertIdentity } from './identity';
 import { getBody } from './body';
 
 // Helpers
@@ -47,9 +47,9 @@ async function createCampaign(
 	campaign.id = campaignId;
 	campaign.body = body;
 	campaign.admin = addressCodec.encode(data.admin);
-	campaign.adminIdentity = await createOrUpdateIdentity(store, campaign.admin, null);
+	campaign.adminIdentity = await upsertIdentity(store, campaign.admin, null);
 	campaign.creator = signer;
-	campaign.creatorIdentity = await createOrUpdateIdentity(store, signer, null);
+	campaign.creatorIdentity = await upsertIdentity(store, signer, null);
 	campaign.target = data.target;
 	campaign.deposit = data.deposit;
 	campaign.expiry = data.expiry;

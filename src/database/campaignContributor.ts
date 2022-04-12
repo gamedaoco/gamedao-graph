@@ -6,7 +6,7 @@ import { Store } from '@subsquid/substrate-processor';
 import { CampaignContributor } from '../model';
 
 // Helpers
-import { createOrUpdateIdentity } from './identity';
+import { upsertIdentity } from './identity';
 import { getCampaign } from './campaign';
 import { get } from './helper';
 
@@ -40,7 +40,7 @@ async function addCampaignContributorContribution(
 		campaignContributor.id = getContributorId(campaignId, contributor);
 		campaignContributor.campaign = campaignModel;
 		campaignContributor.address = contributor;
-		campaignContributor.identity = await createOrUpdateIdentity(store, contributor, null);
+		campaignContributor.identity = await upsertIdentity(store, contributor, null);
 		campaignContributor.contributed = contribution;
 	} else {
 		campaignContributor.contributed += contribution;

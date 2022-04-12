@@ -8,6 +8,9 @@ import { EventHandlerContext } from '@subsquid/substrate-processor';
 import { getBody } from '../../../database/body';
 import { createProposal } from '../../../database/proposal';
 
+// IPFS
+import { fetchProposalMetadata } from '../../../ipfs/proposal';
+
 // Types
 import { GameDaoGovernanceProposalEvent } from '../../../types/events';
 import { GameDaoGovernanceGeneralProposalCall } from '../../../types/calls';
@@ -45,8 +48,16 @@ async function handleProposalEvent(context: EventHandlerContext) {
 		return;
 	}
 
+	// Load proposal metadata
+	const cid = callCreationData.cid.toString();
+	const metadata = await fetchProposalMetadata(cid);
+	if (!metadata) {
+		console.error(`Couldn't fetch proposal metadata of ${id} cid ${cid}`);
+		return;
+	}
+
 	// Create proposal
-	await createProposal(context.store, id, context.extrinsic.signer, callCreationData);
+	await createProposal(context.store, id, context.extrinsic.signer, callCreationData, metadata);
 }
 
 function getCreateData(context: EventHandlerContext): ProposalCreationData | null {

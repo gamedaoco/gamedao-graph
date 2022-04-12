@@ -4,18 +4,26 @@ import { Store } from '@subsquid/substrate-processor';
 
 // Database
 import { Proposal, ProposalState, Body, ProposalTypeGeneralData, ProposalTypeWithdrawalData } from '../model';
-import { createOrUpdateIdentity } from './identity';
+import { upsertIdentity } from './identity';
+import { upsertProposalMetadata } from './proposalMetadata';
 import { get } from './helper';
 
 // Types
 import { ProposalCreationData } from '../@types/pallets/governance/proposalCreationData';
+import { ProposalMetadata } from '../@types/ipfs/proposalMetadata';
 
 // Functions
 function getProposal(store: Store, proposalId: string): Promise<Proposal | null> {
 	return get(store, Proposal, proposalId, ['body', 'campaign', 'creatorIdentity']);
 }
 
-async function createProposal(store: Store, proposalId: string, signer: string, data: ProposalCreationData) {
+async function createProposal(
+	store: Store,
+	proposalId: string,
+	signer: string,
+	data: ProposalCreationData,
+	metadata: ProposalMetadata,
+) {
 	// Check if exists
 	let proposal = await getProposal(store, proposalId);
 	if (proposal) return proposal;
@@ -30,7 +38,7 @@ async function createProposal(store: Store, proposalId: string, signer: string, 
 	proposal.campaign = data.campaign;
 
 	proposal.creator = signer;
-	proposal.creatorIdentity = await createOrUpdateIdentity(store, signer, null);
+	proposal.creatorIdentity = await upsertIdentity(store, signer, null);
 
 	proposal.cid = data.cid.toString();
 
@@ -55,6 +63,8 @@ async function createProposal(store: Store, proposalId: string, signer: string, 
 	proposal.deniers = BigInt(0);
 
 	proposal.state = ProposalState.Voting;
+
+	proposal.metadata = await upsertProposalMetadata(store, proposal.id, metadata);
 
 	proposal.expiryBlock = data.expiry;
 

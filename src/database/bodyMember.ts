@@ -6,7 +6,7 @@ import { Store } from '@subsquid/substrate-processor';
 import { BodyMember } from '../model';
 
 // Helpers
-import { createOrUpdateIdentity } from './identity';
+import { upsertIdentity } from './identity';
 import { getBody } from './body';
 import { get } from './helper';
 
@@ -31,7 +31,7 @@ async function addBodyMember(store: Store, bodyId: string, member: string) {
 	bodyMember.id = getMemberId(bodyId, member);
 	bodyMember.body = bodyModel;
 	bodyMember.address = member;
-	bodyMember.identity = await createOrUpdateIdentity(store, member, null);
+	bodyMember.identity = await upsertIdentity(store, member, null);
 
 	await store.save(bodyMember);
 }

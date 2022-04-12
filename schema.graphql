@@ -129,6 +129,8 @@ type Proposal @entity {
 
     voters: [ProposalVoter!]! @derivedFrom(field: "proposal")
 
+    metadata: ProposalMetadata!
+
     expiryBlock: Int!
 }
 
@@ -140,6 +142,12 @@ type ProposalVoter @entity {
     identity: Identity!
 
     voted: BigInt!
+}
+
+type ProposalMetadata @entity {
+    id: ID!
+    title: String!
+    description: String!
 }
 
 enum ProposalState {

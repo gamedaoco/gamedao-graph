@@ -8,7 +8,7 @@ import { EventHandlerContext } from '@subsquid/substrate-processor';
 
 // Types
 import { IdentityUpsertData } from '../../../@types/pallets/identity/identityUpsertData';
-import { createOrUpdateIdentity } from '../../../database/identity';
+import { upsertIdentity } from '../../../database/identity';
 
 // Logic
 async function handleIdentitySetEvent(context: EventHandlerContext) {
@@ -28,7 +28,7 @@ async function handleIdentitySetEvent(context: EventHandlerContext) {
 		twitter: getValue(identityData.twitter?.raw),
 	};
 
-	await createOrUpdateIdentity(context.store, upsertData.address, upsertData);
+	await upsertIdentity(context.store, upsertData.address, upsertData);
 }
 
 // Exports

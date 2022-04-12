@@ -3,7 +3,7 @@
 import { Store } from '@subsquid/substrate-processor';
 
 // Database
-import { createOrUpdateIdentity } from './identity';
+import { upsertIdentity } from './identity';
 import { ProposalVoter } from '../model';
 import { getProposal } from './proposal';
 import { get } from './helper';
@@ -34,7 +34,7 @@ async function createProposalVoter(store: Store, voteData: ProposalSimpleVoteDat
 	proposalVoter.proposal = proposal;
 
 	proposalVoter.address = voteData.voter;
-	proposalVoter.identity = await createOrUpdateIdentity(store, voteData.voter, null);
+	proposalVoter.identity = await upsertIdentity(store, voteData.voter, null);
 
 	proposalVoter.voted = BigInt(voteData.vote ? 1 : 0);
 

@@ -6,6 +6,7 @@ import {Identity} from "./identity.model"
 import {ProposalTypeData, fromJsonProposalTypeData} from "./_proposalTypeData"
 import {ProposalState} from "./_proposalState"
 import {ProposalVoter} from "./proposalVoter.model"
+import {ProposalMetadata} from "./proposalMetadata.model"
 
 @Entity_()
 export class Proposal {
@@ -54,6 +55,10 @@ export class Proposal {
 
   @OneToMany_(() => ProposalVoter, e => e.proposal)
   voters!: ProposalVoter[]
+
+  @Index_()
+  @ManyToOne_(() => ProposalMetadata, {nullable: false})
+  metadata!: ProposalMetadata
 
   @Column_("integer", {nullable: false})
   expiryBlock!: number
