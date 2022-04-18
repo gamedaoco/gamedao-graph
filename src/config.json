@@ -1,7 +1,7 @@
 {
     "chainRPC": "wss://vmd84731.contaboserver.net",
     "archiveGQL": "http://vmd84731.contaboserver.net:4010/v1/graphql",
-    "startBlock": 5000000,
+    "startBlock": 0,
     "networkAddressPrefix": 25,
 
     "chainRPC1": "wss://zero.gamedao.co",
