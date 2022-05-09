@@ -1,8 +1,8 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_} from "typeorm"
 
 @Entity_()
-export class CampaignMetadata {
-  constructor(props?: Partial<CampaignMetadata>) {
+export class OrganizationMetadata {
+  constructor(props?: Partial<OrganizationMetadata>) {
     Object.assign(this, props)
   }
 
@@ -13,20 +13,17 @@ export class CampaignMetadata {
   name!: string
 
   @Column_("text", {nullable: false})
-  email!: string
-
-  @Column_("text", {nullable: false})
-  title!: string
-
-  @Column_("text", {nullable: false})
   description!: string
 
   @Column_("text", {nullable: false})
-  markdown!: string
+  website!: string
+
+  @Column_("text", {nullable: false})
+  email!: string
+
+  @Column_("text", {nullable: false})
+  repo!: string
 
   @Column_("text", {nullable: false})
   logo!: string
-
-  @Column_("text", {nullable: false})
-  header!: string
 }

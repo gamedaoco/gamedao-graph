@@ -1,27 +1,17 @@
 // Imports
-import { handleBodyCreatedEvent } from './events/bodyCreatedHandler';
-import { handleAddMemberEvent } from './events/addMemberHandler';
-import { handleRemoveMemberEvent } from './events/removeMemberHandler';
+import { handleOrgCreatedEvent } from './events/orgCreatedHandler';
 
 // Types
 import { IPallet } from '../../@types/palletHandler';
 
 // Exports
 export default {
-	name: 'gameDaoControl',
+	name: 'control',
 	extrinsicHandlers: [],
 	eventHandlers: [
 		{
-			action: 'BodyCreated',
-			handler: handleBodyCreatedEvent,
-		},
-		{
-			action: 'AddMember',
-			handler: handleAddMemberEvent,
-		},
-		{
-			action: 'RemoveMember',
-			handler: handleRemoveMemberEvent,
+			action: 'OrgCreated',
+			handler: handleOrgCreatedEvent,
 		},
 	],
 } as IPallet;

@@ -3,25 +3,9 @@
   "chainVersions": "zeroVersions.json",
   "typesBundle": "zeroTypesBundle.json",
   "events": [
-    "gameDaoControl.BodyCreated",
-    "gameDaoControl.AddMember",
-    "gameDaoControl.RemoveMember",
-    "identity.IdentitySet",
-    "gameDaoCrowdfunding.CampaignCreated",
-    "gameDaoCrowdfunding.CampaignContributed",
-    "gameDaoCrowdfunding.CampaignFailed",
-    "gameDaoCrowdfunding.CampaignFinalized",
-    "gameDaoGovernance.ProposalCreated",
-    "gameDaoGovernance.Proposal",
-    "gameDaoGovernance.ProposalVoted",
-    "gameDaoGovernance.ProposalExpired",
-    "gameDaoGovernance.ProposalApproved",
-    "gameDaoGovernance.ProposalRejected"
+    "control.OrgCreated"
   ],
   "calls": [
-    "gameDaoControl.create",
-    "gameDaoCrowdfunding.create",
-    "gameDaoGovernance.general_proposal",
-    "gameDaoGovernance.withdraw_proposal"
+    "control.create_org"
   ]
 }

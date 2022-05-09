@@ -1,13 +1,11 @@
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, ManyToOne as ManyToOne_, Index as Index_, OneToMany as OneToMany_} from "typeorm"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, ManyToOne as ManyToOne_, Index as Index_} from "typeorm"
 import * as marshal from "./marshal"
 import {Identity} from "./identity.model"
-import {BodyMetadata} from "./bodyMetadata.model"
-import {BodyMember} from "./bodyMember.model"
-import {Campaign} from "./campaign.model"
+import {OrganizationMetadata} from "./organizationMetadata.model"
 
 @Entity_()
-export class Body {
-  constructor(props?: Partial<Body>) {
+export class Organization {
+  constructor(props?: Partial<Organization>) {
     Object.assign(this, props)
   }
 
@@ -38,14 +36,14 @@ export class Body {
   @Column_("text", {nullable: false})
   cid!: string
 
-  @Column_("integer", {nullable: false})
-  body!: number
+  @Column_("text", {nullable: false})
+  access!: string
 
-  @Column_("integer", {nullable: false})
-  access!: number
+  @Column_("text", {nullable: false})
+  feeModel!: string
 
-  @Column_("integer", {nullable: false})
-  feeModel!: number
+  @Column_("text", {nullable: false})
+  type!: string
 
   @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
   fee!: bigint
@@ -60,12 +58,6 @@ export class Body {
   memberLimit!: bigint
 
   @Index_()
-  @ManyToOne_(() => BodyMetadata, {nullable: false})
-  metadata!: BodyMetadata
-
-  @OneToMany_(() => BodyMember, e => e.body)
-  members!: BodyMember[]
-
-  @OneToMany_(() => Campaign, e => e.body)
-  campaigns!: Campaign[]
+  @ManyToOne_(() => OrganizationMetadata, {nullable: false})
+  metadata!: OrganizationMetadata
 }

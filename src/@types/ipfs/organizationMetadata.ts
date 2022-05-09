@@ -1,5 +1,5 @@
 // Types
-interface BodyMetadata {
+interface OrganizationMetadata {
 	name: string;
 	description: string;
 	website?: string;
@@ -10,4 +10,4 @@ interface BodyMetadata {
 }
 
 // Exports
-export { BodyMetadata };
+export { OrganizationMetadata };
