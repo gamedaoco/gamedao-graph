@@ -2,7 +2,7 @@ import * as v51 from '../../../types/v51';
 
 export type OrganizationCreationData = {
 	controller: Uint8Array;
-	treasury: Uint8Array;
+	treasury?: Uint8Array;
 	name: Uint8Array;
 	cid: Uint8Array;
 

@@ -25,7 +25,7 @@ async function createOrganization(
 	organizationId: string,
 	signer: string,
 	data: OrganizationCreationData,
-	metadata: OrgIpfsMetadata,
+	metadata: OrgIpfsMetadata | null,
 ) {
 	// Check if exists
 	let organization = await getOrganization(store, organizationId);
@@ -40,7 +40,7 @@ async function createOrganization(
 	organization.creatorIdentity = await upsertIdentity(store, signer, null);
 	organization.controller = addressCodec.encode(data.controller);
 	organization.controllerIdentity = await upsertIdentity(store, organization.controller, null);
-	organization.treasury = addressCodec.encode(data.treasury);
+	organization.treasury = addressCodec.encode(data.treasury as Uint8Array);
 	organization.treasuryIdentity = await upsertIdentity(store, organization.treasury, null);
 	organization.cid = data.cid.toString();
 

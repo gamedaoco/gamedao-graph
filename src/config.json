@@ -1,5 +1,5 @@
 {
-    "startBlock": 0,
+    "startBlock": -1,
     "networkAddressPrefix": 42,
 
     "chainRPC": "wss://beeblebrox.zero.io/node",

@@ -13,13 +13,11 @@ export class ControlCreateOrgCall {
    * 
    * - `creator`: creator
    * - `controller`: current controller
-   * - `treasury`: treasury
    * - `name`: Org name
    * - `cid`: IPFS
    * - `org_type`: individual | legal Org | dao
    * - `access`: anyDAO can join | only member can add | only
-   * - `fee_model`: only TX by OS | fees are reserved | fees are moved to
-   *   treasury
+   * - `fee_model`: only TX by OS | fees are reserved | fees are moved to treasury
    * - `fee`: fee
    * - `gov_asset`: control assets to empower actors
    * - `pay_asset`:
@@ -30,7 +28,7 @@ export class ControlCreateOrgCall {
    * Weight:
    */
   get isV51(): boolean {
-    return this.ctx._chain.getCallHash('control.create_org') === '1fd5c5a5b8c80b9661d8881c96d433dd07d9848a0c9a885faa5514527ea36263'
+    return this.ctx._chain.getCallHash('control.create_org') === 'bd66e94f1a9c6b0b127b60556a0af1ef48b7753daf019cf5e66d57c1aa4e7692'
   }
 
   /**
@@ -39,13 +37,11 @@ export class ControlCreateOrgCall {
    * 
    * - `creator`: creator
    * - `controller`: current controller
-   * - `treasury`: treasury
    * - `name`: Org name
    * - `cid`: IPFS
    * - `org_type`: individual | legal Org | dao
    * - `access`: anyDAO can join | only member can add | only
-   * - `fee_model`: only TX by OS | fees are reserved | fees are moved to
-   *   treasury
+   * - `fee_model`: only TX by OS | fees are reserved | fees are moved to treasury
    * - `fee`: fee
    * - `gov_asset`: control assets to empower actors
    * - `pay_asset`:
@@ -55,7 +51,7 @@ export class ControlCreateOrgCall {
    * 
    * Weight:
    */
-  get asV51(): {controller: v51.AccountId32, treasury: v51.AccountId32, name: Uint8Array, cid: Uint8Array, orgType: v51.OrgType, access: v51.AccessModel, feeModel: v51.FeeModel, fee: bigint, govAsset: number, payAsset: number, memberLimit: bigint} {
+  get asV51(): {controller: v51.AccountId32, name: Uint8Array, cid: Uint8Array, orgType: v51.OrgType, access: v51.AccessModel, feeModel: v51.FeeModel, fee: bigint, govAsset: number, payAsset: number, memberLimit: bigint} {
     assert(this.isV51)
     return this.ctx._chain.decodeCall(this.ctx.extrinsic)
   }
@@ -65,7 +61,7 @@ export class ControlCreateOrgCall {
     return this.isV51
   }
 
-  get asLatest(): {controller: v51.AccountId32, treasury: v51.AccountId32, name: Uint8Array, cid: Uint8Array, orgType: v51.OrgType, access: v51.AccessModel, feeModel: v51.FeeModel, fee: bigint, govAsset: number, payAsset: number, memberLimit: bigint} {
+  get asLatest(): {controller: v51.AccountId32, name: Uint8Array, cid: Uint8Array, orgType: v51.OrgType, access: v51.AccessModel, feeModel: v51.FeeModel, fee: bigint, govAsset: number, payAsset: number, memberLimit: bigint} {
     deprecateLatest()
     return this.asV51
   }

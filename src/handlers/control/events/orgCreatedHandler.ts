@@ -26,6 +26,7 @@ async function handleOrgCreatedEvent(context: EventHandlerContext) {
 	let id;
 	if (organizationCreatedEventData.isV51) {
 		id = hashToHexString(organizationCreatedEventData.asV51.orgId);
+		callCreateData.treasury = organizationCreatedEventData.asV51.treasuryId;
 	} else {
 		console.error(`Unknown version of organization created event!`);
 		return;
@@ -36,7 +37,6 @@ async function handleOrgCreatedEvent(context: EventHandlerContext) {
 	const metadata = await fetchOrganizationMetadata(cid);
 	if (!metadata) {
 		console.error(`Couldn't fetch metadata of organization ${id} cid ${cid}`);
-		return;
 	}
 
 	// Create body

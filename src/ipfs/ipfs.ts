@@ -8,10 +8,13 @@ import { getIpfsUrlByCid } from '../constants/ipfs';
 
 // Functions
 async function fetchJsonByCid(cid: string): Promise<any | null> {
-	const [err, response] = await to(fetch(getIpfsUrlByCid(cid)));
-	if (err) return null;
+	const [errFetch, response] = await to(fetch(getIpfsUrlByCid(cid)));
+	if (errFetch) return null;
 
-	return response?.json();
+	const [errJson, json] = await to(response!.json());
+	if (errJson) return null;
+
+	return json;
 }
 
 export { fetchJsonByCid };

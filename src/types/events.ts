@@ -8,10 +8,10 @@ export class ControlOrgCreatedEvent {
   }
 
   get isV51(): boolean {
-    return this.ctx._chain.getEventHash('control.OrgCreated') === '4c9ef8c12028312a52e3d3a04df94379c9d151b5c341a29aa84d43e21b0c1c40'
+    return this.ctx._chain.getEventHash('control.OrgCreated') === '4e393aea082c3c6ff3eaea7f1751b935a60ac5e3314fa506947bbc9db9aff5dd'
   }
 
-  get asV51(): {senderId: v51.AccountId32, orgId: v51.H256, createdAt: number, realmIndex: bigint} {
+  get asV51(): {senderId: v51.AccountId32, orgId: v51.H256, treasuryId: v51.AccountId32, createdAt: number, realmIndex: bigint} {
     assert(this.isV51)
     return this.ctx._chain.decodeEvent(this.ctx.event)
   }
@@ -21,7 +21,7 @@ export class ControlOrgCreatedEvent {
     return this.isV51
   }
 
-  get asLatest(): {senderId: v51.AccountId32, orgId: v51.H256, createdAt: number, realmIndex: bigint} {
+  get asLatest(): {senderId: v51.AccountId32, orgId: v51.H256, treasuryId: v51.AccountId32, createdAt: number, realmIndex: bigint} {
     deprecateLatest()
     return this.asV51
   }
