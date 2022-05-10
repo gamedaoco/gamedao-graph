@@ -8,8 +8,8 @@ type Identity @entity {
     image: String
     twitter: String
 
-    createdBodies: [Organization!]! @derivedFrom(field: "creatorIdentity")
-    controllerBodies: [Organization!]! @derivedFrom(field: "controllerIdentity")
+    createdOrganizations: [Organization!]! @derivedFrom(field: "creatorIdentity")
+    controllerOrganizations: [Organization!]! @derivedFrom(field: "controllerIdentity")
     organizationMembers: [OrganizationMember!]! @derivedFrom(field: "identity")
 }
 

@@ -64,4 +64,7 @@ export class Organization {
   @Index_()
   @ManyToOne_(() => OrganizationMetadata, {nullable: false})
   metadata!: OrganizationMetadata
+
+  @Column_("bool", {nullable: false})
+  isDisabled!: boolean
 }
