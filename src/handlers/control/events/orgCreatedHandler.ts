@@ -4,6 +4,7 @@ import { fetchOrganizationMetadata } from '../../../ipfs/organization';
 
 // Database
 import { createOrganization } from '../../../database/organization';
+import { addOrganizationMember } from '../../../database/organizationMember';
 
 // Types
 import { EventHandlerContext } from '@subsquid/substrate-processor';
@@ -40,10 +41,16 @@ async function handleOrgCreatedEvent(context: EventHandlerContext) {
 	}
 
 	// Create body
-	/*const body = */ await createOrganization(context.store, id, context.extrinsic.signer, callCreateData, metadata);
+	const organization = await createOrganization(
+		context.store,
+		id,
+		context.extrinsic.signer,
+		callCreateData,
+		metadata,
+	);
 
 	// Add initial member (creator of DAO)
-	//await addBodyMember(context.store, body.id, body.creator);
+	await addOrganizationMember(context.store, organization.id, organization.creator);
 }
 
 function getCreateData(context: EventHandlerContext): OrganizationCreationData | null {

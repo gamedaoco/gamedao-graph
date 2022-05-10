@@ -10,6 +10,7 @@ type Identity @entity {
 
     createdBodies: [Organization!]! @derivedFrom(field: "creatorIdentity")
     controllerBodies: [Organization!]! @derivedFrom(field: "controllerIdentity")
+    organizationMembers: [OrganizationMember!]! @derivedFrom(field: "identity")
 }
 
 type Organization @entity {
@@ -28,6 +29,7 @@ type Organization @entity {
     govAsset: Int!
     payAsset: Int!
     memberLimit: BigInt!
+    members: [OrganizationMember!] @derivedFrom(field: "organization")
     metadata: OrganizationMetadata!
 }
 
@@ -39,4 +41,11 @@ type OrganizationMetadata @entity {
     email: String!
     repo: String!
     logo: String!
+}
+
+type OrganizationMember @entity {
+    id: ID!
+    organization: Organization!
+    address: String!
+    identity: Identity!
 }

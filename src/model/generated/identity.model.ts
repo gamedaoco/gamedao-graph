@@ -1,5 +1,6 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, OneToMany as OneToMany_} from "typeorm"
 import {Organization} from "./organization.model"
+import {OrganizationMember} from "./organizationMember.model"
 
 @Entity_()
 export class Identity {
@@ -36,4 +37,7 @@ export class Identity {
 
   @OneToMany_(() => Organization, e => e.controllerIdentity)
   controllerBodies!: Organization[]
+
+  @OneToMany_(() => OrganizationMember, e => e.identity)
+  organizationMembers!: OrganizationMember[]
 }

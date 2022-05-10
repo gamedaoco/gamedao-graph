@@ -3,7 +3,9 @@
   "chainVersions": "zeroVersions.json",
   "typesBundle": "zeroTypesBundle.json",
   "events": [
-    "control.OrgCreated"
+    "control.OrgCreated",
+    "control.AddMember",
+    "control.RemoveMember"
   ],
   "calls": [
     "control.create_org"

@@ -1,8 +1,8 @@
 import type {Result} from './support'
 
-export type AccountId32 = Uint8Array
-
 export type H256 = Uint8Array
+
+export type AccountId32 = Uint8Array
 
 export type OrgType = OrgType_Individual | OrgType_Company | OrgType_Dao | OrgType_Hybrid
 

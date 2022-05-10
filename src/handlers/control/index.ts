@@ -1,5 +1,7 @@
 // Imports
 import { handleOrgCreatedEvent } from './events/orgCreatedHandler';
+import { handleAddMemberEvent } from './events/addMemberHandler';
+import { handleRemoveMemberEvent } from './events/removeMemberHandler';
 
 // Types
 import { IPallet } from '../../@types/palletHandler';
@@ -12,6 +14,14 @@ export default {
 		{
 			action: 'OrgCreated',
 			handler: handleOrgCreatedEvent,
+		},
+		{
+			action: 'AddMember',
+			handler: handleAddMemberEvent,
+		},
+		{
+			action: 'RemoveMember',
+			handler: handleRemoveMemberEvent,
 		},
 	],
 } as IPallet;
