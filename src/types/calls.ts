@@ -66,3 +66,158 @@ export class ControlCreateOrgCall {
     return this.asV51
   }
 }
+
+export class FlowContributeCall {
+  constructor(private ctx: CallContext) {
+    assert(this.ctx.extrinsic.name === 'flow.contribute')
+  }
+
+  /**
+   * Contribute to project
+   * 
+   * - `campaign_id`:
+   * - `contribution`:
+   * 
+   * Emits `CampaignContributed` event when successful.
+   * 
+   * Weight:
+   */
+  get isV51(): boolean {
+    return this.ctx._chain.getCallHash('flow.contribute') === '61eaa781937ad2c3bdc3d93252533a3ed9af24cea84b9e11282872cab4f156d4'
+  }
+
+  /**
+   * Contribute to project
+   * 
+   * - `campaign_id`:
+   * - `contribution`:
+   * 
+   * Emits `CampaignContributed` event when successful.
+   * 
+   * Weight:
+   */
+  get asV51(): {campaignId: v51.H256, contribution: bigint} {
+    assert(this.isV51)
+    return this.ctx._chain.decodeCall(this.ctx.extrinsic)
+  }
+
+  get isLatest(): boolean {
+    deprecateLatest()
+    return this.isV51
+  }
+
+  get asLatest(): {campaignId: v51.H256, contribution: bigint} {
+    deprecateLatest()
+    return this.asV51
+  }
+}
+
+export class FlowCreateCampaignCall {
+  constructor(private ctx: CallContext) {
+    assert(this.ctx.extrinsic.name === 'flow.createCampaign' || this.ctx.extrinsic.name === 'flow.create_campaign')
+  }
+
+  /**
+   * Create campaign
+   * 
+   * - `org`:
+   * - `admin`: Campaign admin. Supervision, should be dao provided!
+   * - `treasury`:
+   * - `name`: Campaign name
+   * - `target`:
+   * - `deposit`:
+   * - `expiry`:
+   * - `protocol`:
+   * - `governance`:
+   * - `cid`: IPFS
+   * - `token_symbol`:
+   * - `token_name`:
+   * 
+   * Emits `CampaignCreated` event when successful.
+   * 
+   * Weight:
+   */
+  get isV51(): boolean {
+    return this.ctx._chain.getCallHash('flow.create_campaign') === '5565110b83767f4dfa70de59a3cc97fca2f164735c45155550a56bec20aa98b7'
+  }
+
+  /**
+   * Create campaign
+   * 
+   * - `org`:
+   * - `admin`: Campaign admin. Supervision, should be dao provided!
+   * - `treasury`:
+   * - `name`: Campaign name
+   * - `target`:
+   * - `deposit`:
+   * - `expiry`:
+   * - `protocol`:
+   * - `governance`:
+   * - `cid`: IPFS
+   * - `token_symbol`:
+   * - `token_name`:
+   * 
+   * Emits `CampaignCreated` event when successful.
+   * 
+   * Weight:
+   */
+  get asV51(): {org: v51.H256, admin: v51.AccountId32, name: Uint8Array, target: bigint, deposit: bigint, expiry: number, protocol: v51.FlowProtocol, governance: v51.FlowGovernance, cid: Uint8Array, tokenSymbol: Uint8Array, tokenName: Uint8Array} {
+    assert(this.isV51)
+    return this.ctx._chain.decodeCall(this.ctx.extrinsic)
+  }
+
+  get isLatest(): boolean {
+    deprecateLatest()
+    return this.isV51
+  }
+
+  get asLatest(): {org: v51.H256, admin: v51.AccountId32, name: Uint8Array, target: bigint, deposit: bigint, expiry: number, protocol: v51.FlowProtocol, governance: v51.FlowGovernance, cid: Uint8Array, tokenSymbol: Uint8Array, tokenName: Uint8Array} {
+    deprecateLatest()
+    return this.asV51
+  }
+}
+
+export class FlowUpdateStateCall {
+  constructor(private ctx: CallContext) {
+    assert(this.ctx.extrinsic.name === 'flow.updateState' || this.ctx.extrinsic.name === 'flow.update_state')
+  }
+
+  /**
+   * Update campaign state
+   * 
+   * - `campaign_id`:
+   * - `state`:
+   * 
+   * Emits `CampaignUpdated` event when successful.
+   * 
+   * Weight:
+   */
+  get isV51(): boolean {
+    return this.ctx._chain.getCallHash('flow.update_state') === '7a71460dbd54d3f24c0e77a93e35b1f11a2a15c0f039ddc3b8494032f28e004e'
+  }
+
+  /**
+   * Update campaign state
+   * 
+   * - `campaign_id`:
+   * - `state`:
+   * 
+   * Emits `CampaignUpdated` event when successful.
+   * 
+   * Weight:
+   */
+  get asV51(): {campaignId: v51.H256, state: v51.FlowState} {
+    assert(this.isV51)
+    return this.ctx._chain.decodeCall(this.ctx.extrinsic)
+  }
+
+  get isLatest(): boolean {
+    deprecateLatest()
+    return this.isV51
+  }
+
+  get asLatest(): {campaignId: v51.H256, state: v51.FlowState} {
+    deprecateLatest()
+    return this.asV51
+  }
+}

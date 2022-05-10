@@ -11,6 +11,8 @@ type Identity @entity {
     createdOrganizations: [Organization!]! @derivedFrom(field: "creatorIdentity")
     controllerOrganizations: [Organization!]! @derivedFrom(field: "controllerIdentity")
     organizationMembers: [OrganizationMember!]! @derivedFrom(field: "identity")
+    createdCampaigns: [Campaign!]! @derivedFrom(field: "creatorIdentity")
+    campaignContributors: [CampaignContributor!]! @derivedFrom(field: "identity")
 }
 
 type Organization @entity {
@@ -30,6 +32,7 @@ type Organization @entity {
     payAsset: Int!
     memberLimit: BigInt!
     members: [OrganizationMember!] @derivedFrom(field: "organization")
+    campaigns: [Campaign!]! @derivedFrom(field: "organization")
     metadata: OrganizationMetadata!
 }
 
@@ -48,4 +51,47 @@ type OrganizationMember @entity {
     organization: Organization!
     address: String!
     identity: Identity!
+}
+
+type Campaign @entity {
+    id: ID!
+    organization: Organization!
+    creator: String!
+    creatorIdentity: Identity!
+    admin: String!
+    adminIdentity: Identity!
+    target: BigInt!
+    deposit: BigInt!
+    expiry: Int!
+    protocol: String!
+    governance: String!
+    cid: String!
+    tokenSymbol: String!
+    tokenName: String!
+
+    state: String!
+
+    metadata: CampaignMetadata!
+    contributors: [CampaignContributor]! @derivedFrom(field: "campaign")
+}
+
+type CampaignMetadata @entity {
+    id: ID!
+    name: String!
+    email: String!
+    title: String!
+    description: String!
+    markdown: String!
+    logo: String!
+    header: String!
+}
+
+type CampaignContributor @entity {
+    id: ID!
+    campaign: Campaign!
+
+    address: String!
+    identity: Identity!
+
+    contributed: BigInt!
 }

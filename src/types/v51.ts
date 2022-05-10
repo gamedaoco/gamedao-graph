@@ -4,6 +4,32 @@ export type H256 = Uint8Array
 
 export type AccountId32 = Uint8Array
 
+export type FlowState = FlowState_Init | FlowState_Active | FlowState_Paused | FlowState_Success | FlowState_Failed | FlowState_Locked
+
+export interface FlowState_Init {
+  __kind: 'Init'
+}
+
+export interface FlowState_Active {
+  __kind: 'Active'
+}
+
+export interface FlowState_Paused {
+  __kind: 'Paused'
+}
+
+export interface FlowState_Success {
+  __kind: 'Success'
+}
+
+export interface FlowState_Failed {
+  __kind: 'Failed'
+}
+
+export interface FlowState_Locked {
+  __kind: 'Locked'
+}
+
 export type OrgType = OrgType_Individual | OrgType_Company | OrgType_Dao | OrgType_Hybrid
 
 export interface OrgType_Individual {
@@ -48,4 +74,40 @@ export interface FeeModel_Reserve {
 
 export interface FeeModel_Transfer {
   __kind: 'Transfer'
+}
+
+export type FlowProtocol = FlowProtocol_Grant | FlowProtocol_Raise | FlowProtocol_Lend | FlowProtocol_Loan | FlowProtocol_Share | FlowProtocol_Pool
+
+export interface FlowProtocol_Grant {
+  __kind: 'Grant'
+}
+
+export interface FlowProtocol_Raise {
+  __kind: 'Raise'
+}
+
+export interface FlowProtocol_Lend {
+  __kind: 'Lend'
+}
+
+export interface FlowProtocol_Loan {
+  __kind: 'Loan'
+}
+
+export interface FlowProtocol_Share {
+  __kind: 'Share'
+}
+
+export interface FlowProtocol_Pool {
+  __kind: 'Pool'
+}
+
+export type FlowGovernance = FlowGovernance_No | FlowGovernance_Yes
+
+export interface FlowGovernance_No {
+  __kind: 'No'
+}
+
+export interface FlowGovernance_Yes {
+  __kind: 'Yes'
 }

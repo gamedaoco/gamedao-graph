@@ -2,6 +2,7 @@ import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, M
 import * as marshal from "./marshal"
 import {Identity} from "./identity.model"
 import {OrganizationMember} from "./organizationMember.model"
+import {Campaign} from "./campaign.model"
 import {OrganizationMetadata} from "./organizationMetadata.model"
 
 @Entity_()
@@ -61,10 +62,10 @@ export class Organization {
   @OneToMany_(() => OrganizationMember, e => e.organization)
   members!: OrganizationMember[]
 
+  @OneToMany_(() => Campaign, e => e.organization)
+  campaigns!: Campaign[]
+
   @Index_()
   @ManyToOne_(() => OrganizationMetadata, {nullable: false})
   metadata!: OrganizationMetadata
-
-  @Column_("bool", {nullable: false})
-  isDisabled!: boolean
 }

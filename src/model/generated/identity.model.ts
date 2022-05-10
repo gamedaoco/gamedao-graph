@@ -1,6 +1,8 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, OneToMany as OneToMany_} from "typeorm"
 import {Organization} from "./organization.model"
 import {OrganizationMember} from "./organizationMember.model"
+import {Campaign} from "./campaign.model"
+import {CampaignContributor} from "./campaignContributor.model"
 
 @Entity_()
 export class Identity {
@@ -33,11 +35,17 @@ export class Identity {
   twitter!: string | undefined | null
 
   @OneToMany_(() => Organization, e => e.creatorIdentity)
-  createdBodies!: Organization[]
+  createdOrganizations!: Organization[]
 
   @OneToMany_(() => Organization, e => e.controllerIdentity)
-  controllerBodies!: Organization[]
+  controllerOrganizations!: Organization[]
 
   @OneToMany_(() => OrganizationMember, e => e.identity)
   organizationMembers!: OrganizationMember[]
+
+  @OneToMany_(() => Campaign, e => e.creatorIdentity)
+  createdCampaigns!: Campaign[]
+
+  @OneToMany_(() => CampaignContributor, e => e.identity)
+  campaignContributors!: CampaignContributor[]
 }

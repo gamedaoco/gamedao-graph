@@ -5,9 +5,17 @@
   "events": [
     "control.OrgCreated",
     "control.AddMember",
-    "control.RemoveMember"
+    "control.RemoveMember",
+    "flow.CampaignCreated",
+    "flow.CampaignContributed",
+    "flow.CampaignFailed",
+    "flow.CampaignFinalized",
+    "flow.CampaignUpdated"
   ],
   "calls": [
-    "control.create_org"
+    "control.create_org",
+    "flow.create_campaign",
+    "flow.contribute",
+    "flow.update_state"
   ]
 }
