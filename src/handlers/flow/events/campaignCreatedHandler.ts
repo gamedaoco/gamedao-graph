@@ -12,6 +12,7 @@ import { createCampaign } from '../../../database/campaign';
 import { FlowCampaignCreatedEvent } from '../../../types/events';
 import { FlowCreateCampaignCall } from '../../../types/calls';
 import { CampaignCreationData } from '../../../@types/pallets/crowdfunding/campaignCreationData';
+import { CampaignMetadata } from '../../../@types/ipfs/campaignMetadata';
 
 // Functions
 async function handleCampaignCreatedEvent(context: EventHandlerContext) {
@@ -34,10 +35,19 @@ async function handleCampaignCreatedEvent(context: EventHandlerContext) {
 	}
 
 	// Load body metadata
-	const cid = callCreateData.cid.toString();
-	const metadata = await fetchCampaignMetadata(cid);
-	if (!metadata) {
-		console.error(`Couldn't fetch metadata of campaign ${id} cid ${cid}`);
+	let metadata: CampaignMetadata | null = null;
+	try {
+		const cid = callCreateData.cid.toString();
+		if (cid.length > 32) {
+			console.error(`Couldn't fetch metadata of campaign ${id}, invalid cid`);
+			callCreateData.cid = new Uint8Array();
+		} else {
+			metadata = await fetchCampaignMetadata(cid);
+			if (!metadata) {
+				console.error(`Couldn't fetch metadata of campaign ${id}`);
+			}
+		}
+	} catch (e) {
 	}
 
 	// Create campaign

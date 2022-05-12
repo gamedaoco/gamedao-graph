@@ -11,6 +11,7 @@ import { EventHandlerContext } from '@subsquid/substrate-processor';
 import { OrganizationCreationData } from '../../../@types/pallets/control/orgCreationData';
 import { ControlOrgCreatedEvent } from '../../../types/events';
 import { ControlCreateOrgCall } from '../../../types/calls';
+import { OrganizationMetadata } from '../../../@types/ipfs/organizationMetadata';
 
 // Logic
 async function handleOrgCreatedEvent(context: EventHandlerContext) {
@@ -34,10 +35,19 @@ async function handleOrgCreatedEvent(context: EventHandlerContext) {
 	}
 
 	// Load organization metadata
-	const cid = callCreateData.cid.toString();
-	const metadata = await fetchOrganizationMetadata(cid);
-	if (!metadata) {
-		console.error(`Couldn't fetch metadata of organization ${id} cid ${cid}`);
+	let metadata: OrganizationMetadata | null = null;
+	try {
+		const cid = callCreateData.cid.toString();
+		if (cid.length > 32) {
+			console.error(`Couldn't fetch metadata of organization ${id}, invalid cid`);
+			callCreateData.cid = new Uint8Array();
+		} else {
+			metadata = await fetchOrganizationMetadata(cid);
+			if (!metadata) {
+				console.error(`Couldn't fetch metadata of organization ${id}`);
+			}
+		}
+	} catch (e) {
 	}
 
 	// Create body
