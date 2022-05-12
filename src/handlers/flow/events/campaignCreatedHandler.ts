@@ -38,7 +38,7 @@ async function handleCampaignCreatedEvent(context: EventHandlerContext) {
 	let metadata: CampaignMetadata | null = null;
 	try {
 		const cid = callCreateData.cid.toString();
-		if (cid.length > 32) {
+		if (cid.length > 46) {
 			console.error(`Couldn't fetch metadata of campaign ${id}, invalid cid`);
 			callCreateData.cid = new Uint8Array();
 		} else {
