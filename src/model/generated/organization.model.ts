@@ -68,4 +68,7 @@ export class Organization {
   @Index_()
   @ManyToOne_(() => OrganizationMetadata, {nullable: false})
   metadata!: OrganizationMetadata
+
+  @Column_("integer", {nullable: false})
+  createdAtBlock!: number
 }

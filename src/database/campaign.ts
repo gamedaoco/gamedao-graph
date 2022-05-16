@@ -63,6 +63,8 @@ async function createCampaign(
 
 	campaign.metadata = await upsertCampaignMetadata(store, campaign.cid, metadata);
 
+	campaign.createdAtBlock = data.blockNumber as number;
+
 	// Save campaign
 	await store.save(campaign);
 

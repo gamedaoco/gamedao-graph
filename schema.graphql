@@ -34,6 +34,7 @@ type Organization @entity {
     members: [OrganizationMember!] @derivedFrom(field: "organization")
     campaigns: [Campaign!]! @derivedFrom(field: "organization")
     metadata: OrganizationMetadata!
+    createdAtBlock: Int!
 }
 
 type OrganizationMetadata @entity {
@@ -73,6 +74,8 @@ type Campaign @entity {
 
     metadata: CampaignMetadata!
     contributors: [CampaignContributor]! @derivedFrom(field: "campaign")
+
+    createdAtBlock: Int!
 }
 
 type CampaignMetadata @entity {

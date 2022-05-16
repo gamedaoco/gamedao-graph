@@ -54,6 +54,8 @@ async function createOrganization(
 	organization.memberLimit = data.memberLimit;
 	organization.metadata = await upsertOrganizationMetadata(store, organization.cid, metadata);
 
+	organization.createdAtBlock = data.blockNumber as number;
+
 	// Save organization
 	await store.save(organization);
 

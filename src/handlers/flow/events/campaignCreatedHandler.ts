@@ -13,6 +13,7 @@ import { FlowCampaignCreatedEvent } from '../../../types/events';
 import { FlowCreateCampaignCall } from '../../../types/calls';
 import { CampaignCreationData } from '../../../@types/pallets/crowdfunding/campaignCreationData';
 import { CampaignMetadata } from '../../../@types/ipfs/campaignMetadata';
+import { isCIDValid } from '../../../helpers';
 
 // Functions
 async function handleCampaignCreatedEvent(context: EventHandlerContext) {
@@ -21,6 +22,8 @@ async function handleCampaignCreatedEvent(context: EventHandlerContext) {
 	// Get versioned call
 	const callCreateData = getCreateData(context);
 	if (!callCreateData) return;
+
+	callCreateData.blockNumber = context.block.height;
 
 	// Get versioned instance
 	const campaignCreatedEventData = new FlowCampaignCreatedEvent(context);
@@ -38,7 +41,7 @@ async function handleCampaignCreatedEvent(context: EventHandlerContext) {
 	let metadata: CampaignMetadata | null = null;
 	try {
 		const cid = callCreateData.cid.toString();
-		if (cid.length > 46) {
+		if (!isCIDValid(cid)) {
 			console.error(`Couldn't fetch metadata of campaign ${id}, invalid cid`);
 			callCreateData.cid = new Uint8Array();
 		} else {

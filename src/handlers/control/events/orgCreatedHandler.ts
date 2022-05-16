@@ -12,6 +12,7 @@ import { OrganizationCreationData } from '../../../@types/pallets/control/orgCre
 import { ControlOrgCreatedEvent } from '../../../types/events';
 import { ControlCreateOrgCall } from '../../../types/calls';
 import { OrganizationMetadata } from '../../../@types/ipfs/organizationMetadata';
+import { isCIDValid } from '../../../helpers';
 
 // Logic
 async function handleOrgCreatedEvent(context: EventHandlerContext) {
@@ -20,6 +21,8 @@ async function handleOrgCreatedEvent(context: EventHandlerContext) {
 	// Get versioned call
 	const callCreateData = getCreateData(context);
 	if (!callCreateData) return;
+
+	callCreateData.blockNumber = context.block.height;
 
 	// Get versioned instance
 	const organizationCreatedEventData = new ControlOrgCreatedEvent(context);
@@ -38,7 +41,7 @@ async function handleOrgCreatedEvent(context: EventHandlerContext) {
 	let metadata: OrganizationMetadata | null = null;
 	try {
 		const cid = callCreateData.cid.toString();
-		if (cid.length > 46) {
+		if (!isCIDValid(cid)) {
 			console.error(`Couldn't fetch metadata of organization ${id}, invalid cid`);
 			callCreateData.cid = new Uint8Array();
 		} else {
@@ -48,6 +51,7 @@ async function handleOrgCreatedEvent(context: EventHandlerContext) {
 			}
 		}
 	} catch (e) {
+		console.log(e);
 	}
 
 	// Create body

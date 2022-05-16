@@ -65,4 +65,7 @@ export class Campaign {
 
   @OneToMany_(() => CampaignContributor, e => e.campaign)
   contributors!: CampaignContributor[]
+
+  @Column_("integer", {nullable: false})
+  createdAtBlock!: number
 }

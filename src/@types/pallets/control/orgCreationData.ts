@@ -14,4 +14,6 @@ export type OrganizationCreationData = {
 	govAsset: number;
 	payAsset: number;
 	memberLimit: bigint;
+
+	blockNumber?: number;
 };

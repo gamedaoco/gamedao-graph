@@ -12,4 +12,5 @@ export type CampaignCreationData = {
 	cid: Uint8Array;
 	tokenSymbol: Uint8Array;
 	tokenName: Uint8Array;
+	blockNumber?: number;
 };
