@@ -23,7 +23,6 @@ type Organization @entity {
     controllerIdentity: Identity!
     treasury: String!
     treasuryIdentity: Identity!
-    cid: String!
     access: String!
     feeModel: String!
     type: String!
@@ -33,7 +32,7 @@ type Organization @entity {
     memberLimit: BigInt!
     members: [OrganizationMember!] @derivedFrom(field: "organization")
     campaigns: [Campaign!]! @derivedFrom(field: "organization")
-    metadata: OrganizationMetadata!
+    metadata: OrganizationMetadata
     createdAtBlock: Int!
 }
 
@@ -66,13 +65,12 @@ type Campaign @entity {
     expiry: Int!
     protocol: String!
     governance: String!
-    cid: String!
     tokenSymbol: String!
     tokenName: String!
 
     state: String!
 
-    metadata: CampaignMetadata!
+    metadata: CampaignMetadata
     contributors: [CampaignContributor]! @derivedFrom(field: "campaign")
 
     createdAtBlock: Int!

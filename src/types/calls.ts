@@ -11,7 +11,7 @@ export class ControlCreateOrgCall {
   /**
    * Create Org
    * create an on chain organisation
-   *
+   * 
    * - `creator`: creator
    * - `controller`: current controller
    * - `name`: Org name
@@ -23,9 +23,9 @@ export class ControlCreateOrgCall {
    * - `gov_asset`: control assets to empower actors
    * - `pay_asset`:
    * - `member_limit`: max members, if 0 == no limit
-   *
+   * 
    * Emits `OrgCreated` event when successful.
-   *
+   * 
    * Weight:
    */
   get isV51(): boolean {
@@ -35,7 +35,7 @@ export class ControlCreateOrgCall {
   /**
    * Create Org
    * create an on chain organisation
-   *
+   * 
    * - `creator`: creator
    * - `controller`: current controller
    * - `name`: Org name
@@ -47,9 +47,9 @@ export class ControlCreateOrgCall {
    * - `gov_asset`: control assets to empower actors
    * - `pay_asset`:
    * - `member_limit`: max members, if 0 == no limit
-   *
+   * 
    * Emits `OrgCreated` event when successful.
-   *
+   * 
    * Weight:
    */
   get asV51(): {controller: v51.AccountId32, name: Uint8Array, cid: Uint8Array, orgType: v51.OrgType, access: v51.AccessModel, feeModel: v51.FeeModel, fee: bigint, govAsset: number, payAsset: number, memberLimit: bigint} {
@@ -60,7 +60,7 @@ export class ControlCreateOrgCall {
   /**
    * Create Org
    * create an on chain organisation
-   *
+   * 
    * - `creator`: creator
    * - `controller`: current controller
    * - `name`: Org name
@@ -73,9 +73,9 @@ export class ControlCreateOrgCall {
    * - `pay_asset`:
    * - `member_limit`: max members, if 0 == no limit
    * - `deposit`: initial deposit for the org treasury
-   *
+   * 
    * Emits `OrgCreated` event when successful.
-   *
+   * 
    * Weight:
    */
   get isV52(): boolean {
@@ -85,7 +85,7 @@ export class ControlCreateOrgCall {
   /**
    * Create Org
    * create an on chain organisation
-   *
+   * 
    * - `creator`: creator
    * - `controller`: current controller
    * - `name`: Org name
@@ -98,12 +98,12 @@ export class ControlCreateOrgCall {
    * - `pay_asset`:
    * - `member_limit`: max members, if 0 == no limit
    * - `deposit`: initial deposit for the org treasury
-   *
+   * 
    * Emits `OrgCreated` event when successful.
-   *
+   * 
    * Weight:
    */
-    get asV52(): {controllerId: v52.AccountId32, name: Uint8Array, cid: Uint8Array, orgType: v52.OrgType, access: v52.AccessModel, feeModel: v52.FeeModel, fee: bigint, govAsset: number, payAsset: number, memberLimit: bigint, deposit: bigint} {
+  get asV52(): {controllerId: v52.AccountId32, name: Uint8Array, cid: Uint8Array, orgType: v52.OrgType, access: v52.AccessModel, feeModel: v52.FeeModel, fee: bigint, govAsset: number, payAsset: number, memberLimit: bigint, deposit: bigint} {
     assert(this.isV52)
     return this.ctx._chain.decodeCall(this.ctx.extrinsic)
   }
@@ -126,12 +126,12 @@ export class FlowContributeCall {
 
   /**
    * Contribute to project
-   *
+   * 
    * - `campaign_id`:
    * - `contribution`:
-   *
+   * 
    * Emits `CampaignContributed` event when successful.
-   *
+   * 
    * Weight:
    */
   get isV51(): boolean {
@@ -140,12 +140,12 @@ export class FlowContributeCall {
 
   /**
    * Contribute to project
-   *
+   * 
    * - `campaign_id`:
    * - `contribution`:
-   *
+   * 
    * Emits `CampaignContributed` event when successful.
-   *
+   * 
    * Weight:
    */
   get asV51(): {campaignId: v51.H256, contribution: bigint} {
@@ -171,7 +171,7 @@ export class FlowCreateCampaignCall {
 
   /**
    * Create campaign
-   *
+   * 
    * - `org`:
    * - `admin`: Campaign admin. Supervision, should be dao provided!
    * - `treasury`:
@@ -184,9 +184,9 @@ export class FlowCreateCampaignCall {
    * - `cid`: IPFS
    * - `token_symbol`:
    * - `token_name`:
-   *
+   * 
    * Emits `CampaignCreated` event when successful.
-   *
+   * 
    * Weight:
    */
   get isV51(): boolean {
@@ -195,7 +195,7 @@ export class FlowCreateCampaignCall {
 
   /**
    * Create campaign
-   *
+   * 
    * - `org`:
    * - `admin`: Campaign admin. Supervision, should be dao provided!
    * - `treasury`:
@@ -208,9 +208,9 @@ export class FlowCreateCampaignCall {
    * - `cid`: IPFS
    * - `token_symbol`:
    * - `token_name`:
-   *
+   * 
    * Emits `CampaignCreated` event when successful.
-   *
+   * 
    * Weight:
    */
   get asV51(): {org: v51.H256, admin: v51.AccountId32, name: Uint8Array, target: bigint, deposit: bigint, expiry: number, protocol: v51.FlowProtocol, governance: v51.FlowGovernance, cid: Uint8Array, tokenSymbol: Uint8Array, tokenName: Uint8Array} {
@@ -220,7 +220,7 @@ export class FlowCreateCampaignCall {
 
   /**
    * Create campaign
-   *
+   * 
    * - `org`:
    * - `admin`: Campaign admin. Supervision, should be dao provided!
    * - `treasury`:
@@ -233,9 +233,9 @@ export class FlowCreateCampaignCall {
    * - `cid`: IPFS
    * - `token_symbol`:
    * - `token_name`:
-   *
+   * 
    * Emits `CampaignCreated` event when successful.
-   *
+   * 
    * Weight:
    */
   get isV52(): boolean {
@@ -244,7 +244,7 @@ export class FlowCreateCampaignCall {
 
   /**
    * Create campaign
-   *
+   * 
    * - `org`:
    * - `admin`: Campaign admin. Supervision, should be dao provided!
    * - `treasury`:
@@ -257,9 +257,9 @@ export class FlowCreateCampaignCall {
    * - `cid`: IPFS
    * - `token_symbol`:
    * - `token_name`:
-   *
+   * 
    * Emits `CampaignCreated` event when successful.
-   *
+   * 
    * Weight:
    */
   get asV52(): {orgId: v52.H256, adminId: v52.AccountId32, name: Uint8Array, target: bigint, deposit: bigint, expiry: number, protocol: v52.FlowProtocol, governance: v52.FlowGovernance, cid: Uint8Array, tokenSymbol: Uint8Array, tokenName: Uint8Array} {
@@ -285,12 +285,12 @@ export class FlowUpdateStateCall {
 
   /**
    * Update campaign state
-   *
+   * 
    * - `campaign_id`:
    * - `state`:
-   *
+   * 
    * Emits `CampaignUpdated` event when successful.
-   *
+   * 
    * Weight:
    */
   get isV51(): boolean {
@@ -299,12 +299,12 @@ export class FlowUpdateStateCall {
 
   /**
    * Update campaign state
-   *
+   * 
    * - `campaign_id`:
    * - `state`:
-   *
+   * 
    * Emits `CampaignUpdated` event when successful.
-   *
+   * 
    * Weight:
    */
   get asV51(): {campaignId: v51.H256, state: v51.FlowState} {
@@ -314,12 +314,12 @@ export class FlowUpdateStateCall {
 
   /**
    * Update campaign state
-   *
+   * 
    * - `campaign_id`:
    * - `state`:
-   *
+   * 
    * Emits `CampaignUpdated` event when successful.
-   *
+   * 
    * Weight:
    */
   get isV52(): boolean {
@@ -328,12 +328,12 @@ export class FlowUpdateStateCall {
 
   /**
    * Update campaign state
-   *
+   * 
    * - `campaign_id`:
    * - `state`:
-   *
+   * 
    * Emits `CampaignUpdated` event when successful.
-   *
+   * 
    * Weight:
    */
   get asV52(): {campaignId: v52.H256, state: v52.FlowState} {

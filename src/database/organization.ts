@@ -12,7 +12,6 @@ import { OrganizationCreationData } from '../@types/pallets/control/orgCreationD
 import { OrganizationMetadata as OrgIpfsMetadata } from '../@types/ipfs/organizationMetadata';
 
 // Helpers
-import { addressCodec } from '../utils';
 import { upsertOrganizationMetadata } from './organizationMetadata';
 
 // Functions
@@ -38,11 +37,10 @@ async function createOrganization(
 	organization.id = organizationId;
 	organization.creator = signer;
 	organization.creatorIdentity = await upsertIdentity(store, signer, null);
-	organization.controller = addressCodec.encode(data.controller);
+	organization.controller = data.controller;
 	organization.controllerIdentity = await upsertIdentity(store, organization.controller, null);
-	organization.treasury = addressCodec.encode(data.treasury as Uint8Array);
+	organization.treasury = data.treasury as string;
 	organization.treasuryIdentity = await upsertIdentity(store, organization.treasury, null);
-	organization.cid = data.cid.toString();
 
 	organization.access = data.access.__kind;
 	organization.feeModel = data.feeModel.__kind;
@@ -52,7 +50,10 @@ async function createOrganization(
 	organization.govAsset = data.govAsset;
 	organization.payAsset = data.payAsset;
 	organization.memberLimit = data.memberLimit;
-	organization.metadata = await upsertOrganizationMetadata(store, organization.cid, metadata);
+
+	if (data.cid) {
+		organization.metadata = await upsertOrganizationMetadata(store, data.cid, metadata);
+	}
 
 	organization.createdAtBlock = data.blockNumber as number;
 

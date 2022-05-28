@@ -48,9 +48,6 @@ export class Campaign {
   governance!: string
 
   @Column_("text", {nullable: false})
-  cid!: string
-
-  @Column_("text", {nullable: false})
   tokenSymbol!: string
 
   @Column_("text", {nullable: false})
@@ -60,8 +57,8 @@ export class Campaign {
   state!: string
 
   @Index_()
-  @ManyToOne_(() => CampaignMetadata, {nullable: false})
-  metadata!: CampaignMetadata
+  @ManyToOne_(() => CampaignMetadata, {nullable: true})
+  metadata!: CampaignMetadata | undefined | null
 
   @OneToMany_(() => CampaignContributor, e => e.campaign)
   contributors!: CampaignContributor[]

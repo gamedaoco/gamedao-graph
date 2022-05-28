@@ -1,10 +1,9 @@
 import * as v51 from '../../../types/v51';
 
 export type OrganizationCreationData = {
-	controller: Uint8Array;
-	treasury?: Uint8Array;
-	name: Uint8Array;
-	cid: Uint8Array;
+	controller: string;
+	name: string;
+	cid: string | null;
 
 	orgType: v51.OrgType;
 	access: v51.AccessModel;
@@ -15,5 +14,7 @@ export type OrganizationCreationData = {
 	payAsset: number;
 	memberLimit: bigint;
 
-	blockNumber?: number;
+	blockNumber: number;
+
+	treasury?: string;
 };

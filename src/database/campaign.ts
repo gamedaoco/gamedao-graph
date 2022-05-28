@@ -10,7 +10,6 @@ import { getOrganization } from './organization';
 
 // Helpers
 import { get } from './helper';
-import { addressCodec, hashToHexString } from '../utils';
 
 // Types
 import { CampaignCreationData } from '../@types/pallets/crowdfunding/campaignCreationData';
@@ -33,7 +32,7 @@ async function createCampaign(
 	if (campaign) return campaign;
 
 	// Get organization
-	const organizationId = hashToHexString(data.org);
+	const organizationId = data.org;
 	const organization = await getOrganization(store, organizationId);
 	if (!organization) {
 		console.error(`Unknown organization ${organizationId} for campaign ${campaignId}`);
@@ -46,7 +45,7 @@ async function createCampaign(
 	// Fill data
 	campaign.id = campaignId;
 	campaign.organization = organization;
-	campaign.admin = addressCodec.encode(data.admin);
+	campaign.admin = data.admin;
 	campaign.adminIdentity = await upsertIdentity(store, campaign.admin, null);
 	campaign.creator = signer;
 	campaign.creatorIdentity = await upsertIdentity(store, signer, null);
@@ -55,13 +54,14 @@ async function createCampaign(
 	campaign.expiry = data.expiry;
 	campaign.protocol = data.protocol.__kind;
 	campaign.governance = data.governance.__kind;
-	campaign.cid = data.cid.toString();
-	campaign.tokenSymbol = data.tokenSymbol.toString();
-	campaign.tokenName = data.tokenName.toString();
+	campaign.tokenSymbol = data.tokenSymbol;
+	campaign.tokenName = data.tokenName;
 
 	campaign.state = 'Active';
 
-	campaign.metadata = await upsertCampaignMetadata(store, campaign.cid, metadata);
+	if (data.cid) {
+		campaign.metadata = await upsertCampaignMetadata(store, data.cid, metadata);
+	}
 
 	campaign.createdAtBlock = data.blockNumber as number;
 

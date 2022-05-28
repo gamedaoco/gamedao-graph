@@ -1,25 +1,26 @@
 // Imports
-import { hashToHexString } from '../../../utils';
+import { addressCodec, hashToHexString } from '../../../utils';
 import { fetchOrganizationMetadata } from '../../../ipfs/organization';
 
 // Database
 import { createOrganization } from '../../../database/organization';
 import { addOrganizationMember } from '../../../database/organizationMember';
 
+// Transformer
+import { getOrganizationCreationData } from '../../../transformer/organizationCreateDataTransformer';
+
 // Types
 import { EventHandlerContext } from '@subsquid/substrate-processor';
-import { OrganizationCreationData } from '../../../@types/pallets/control/orgCreationData';
 import { ControlOrgCreatedEvent } from '../../../types/events';
-import { ControlCreateOrgCall } from '../../../types/calls';
 import { OrganizationMetadata } from '../../../@types/ipfs/organizationMetadata';
-import { isCIDValid } from '../../../helpers';
+import { isCIDValid } from '../../../utils';
 
 // Logic
 async function handleOrgCreatedEvent(context: EventHandlerContext) {
 	if (!context.extrinsic) return;
 
 	// Get versioned call
-	const callCreateData = getCreateData(context);
+	const callCreateData = getOrganizationCreationData(context);
 	if (!callCreateData) return;
 
 	callCreateData.blockNumber = context.block.height;
@@ -31,7 +32,7 @@ async function handleOrgCreatedEvent(context: EventHandlerContext) {
 	let id;
 	if (organizationCreatedEventData.isV51) {
 		id = hashToHexString(organizationCreatedEventData.asV51.orgId);
-		callCreateData.treasury = organizationCreatedEventData.asV51.treasuryId;
+		callCreateData.treasury = addressCodec.encode(organizationCreatedEventData.asV51.treasuryId);
 	} else {
 		console.error(`Unknown version of organization created event!`);
 		return;
@@ -40,12 +41,11 @@ async function handleOrgCreatedEvent(context: EventHandlerContext) {
 	// Load organization metadata
 	let metadata: OrganizationMetadata | null = null;
 	try {
-		const cid = callCreateData.cid.toString();
-		if (!isCIDValid(cid)) {
+		if (!isCIDValid(callCreateData.cid)) {
 			console.error(`Couldn't fetch metadata of organization ${id}, invalid cid`);
-			callCreateData.cid = new Uint8Array();
+			callCreateData.cid = null;
 		} else {
-			metadata = await fetchOrganizationMetadata(cid);
+			metadata = await fetchOrganizationMetadata(callCreateData.cid as string);
 			if (!metadata) {
 				console.error(`Couldn't fetch metadata of organization ${id}`);
 			}
@@ -65,26 +65,6 @@ async function handleOrgCreatedEvent(context: EventHandlerContext) {
 
 	// Add initial member (creator of DAO)
 	await addOrganizationMember(context.store, organization.id, organization.creator);
-}
-
-function getCreateData(context: EventHandlerContext): OrganizationCreationData | null {
-	if (context.extrinsic) {
-		// Get versioned extrinsic call
-		const createData = new ControlCreateOrgCall({
-			_chain: context._chain,
-			block: context.block,
-			extrinsic: context.extrinsic,
-		});
-
-		// Get versioned data
-		if (createData.isV51) {
-			return createData.asV51;
-		} else {
-			console.error(`Unknown version of create organization extrinsic!`);
-		}
-	}
-
-	return null;
 }
 
 // Exports

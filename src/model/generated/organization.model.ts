@@ -36,9 +36,6 @@ export class Organization {
   treasuryIdentity!: Identity
 
   @Column_("text", {nullable: false})
-  cid!: string
-
-  @Column_("text", {nullable: false})
   access!: string
 
   @Column_("text", {nullable: false})
@@ -66,8 +63,8 @@ export class Organization {
   campaigns!: Campaign[]
 
   @Index_()
-  @ManyToOne_(() => OrganizationMetadata, {nullable: false})
-  metadata!: OrganizationMetadata
+  @ManyToOne_(() => OrganizationMetadata, {nullable: true})
+  metadata!: OrganizationMetadata | undefined | null
 
   @Column_("integer", {nullable: false})
   createdAtBlock!: number
