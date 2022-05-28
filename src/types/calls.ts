@@ -1,6 +1,7 @@
 import assert from 'assert'
 import {CallContext, Result, deprecateLatest} from './support'
 import * as v51 from './v51'
+import * as v52 from './v52'
 
 export class ControlCreateOrgCall {
   constructor(private ctx: CallContext) {
@@ -10,7 +11,7 @@ export class ControlCreateOrgCall {
   /**
    * Create Org
    * create an on chain organisation
-   * 
+   *
    * - `creator`: creator
    * - `controller`: current controller
    * - `name`: Org name
@@ -22,9 +23,9 @@ export class ControlCreateOrgCall {
    * - `gov_asset`: control assets to empower actors
    * - `pay_asset`:
    * - `member_limit`: max members, if 0 == no limit
-   * 
+   *
    * Emits `OrgCreated` event when successful.
-   * 
+   *
    * Weight:
    */
   get isV51(): boolean {
@@ -34,7 +35,7 @@ export class ControlCreateOrgCall {
   /**
    * Create Org
    * create an on chain organisation
-   * 
+   *
    * - `creator`: creator
    * - `controller`: current controller
    * - `name`: Org name
@@ -46,9 +47,9 @@ export class ControlCreateOrgCall {
    * - `gov_asset`: control assets to empower actors
    * - `pay_asset`:
    * - `member_limit`: max members, if 0 == no limit
-   * 
+   *
    * Emits `OrgCreated` event when successful.
-   * 
+   *
    * Weight:
    */
   get asV51(): {controller: v51.AccountId32, name: Uint8Array, cid: Uint8Array, orgType: v51.OrgType, access: v51.AccessModel, feeModel: v51.FeeModel, fee: bigint, govAsset: number, payAsset: number, memberLimit: bigint} {
@@ -56,14 +57,65 @@ export class ControlCreateOrgCall {
     return this.ctx._chain.decodeCall(this.ctx.extrinsic)
   }
 
-  get isLatest(): boolean {
-    deprecateLatest()
-    return this.isV51
+  /**
+   * Create Org
+   * create an on chain organisation
+   *
+   * - `creator`: creator
+   * - `controller`: current controller
+   * - `name`: Org name
+   * - `cid`: IPFS
+   * - `org_type`: individual | legal Org | dao
+   * - `access`: anyDAO can join | only member can add | only
+   * - `fee_model`: only TX by OS | fees are reserved | fees are moved to treasury
+   * - `fee`: fee
+   * - `gov_asset`: control assets to empower actors
+   * - `pay_asset`:
+   * - `member_limit`: max members, if 0 == no limit
+   * - `deposit`: initial deposit for the org treasury
+   *
+   * Emits `OrgCreated` event when successful.
+   *
+   * Weight:
+   */
+  get isV52(): boolean {
+    return this.ctx._chain.getCallHash('control.create_org') === '5a41cf027d0dfe63aaadfff3d4b5cda9eee31089c10470af216dd162e62656e8'
   }
 
-  get asLatest(): {controller: v51.AccountId32, name: Uint8Array, cid: Uint8Array, orgType: v51.OrgType, access: v51.AccessModel, feeModel: v51.FeeModel, fee: bigint, govAsset: number, payAsset: number, memberLimit: bigint} {
+  /**
+   * Create Org
+   * create an on chain organisation
+   *
+   * - `creator`: creator
+   * - `controller`: current controller
+   * - `name`: Org name
+   * - `cid`: IPFS
+   * - `org_type`: individual | legal Org | dao
+   * - `access`: anyDAO can join | only member can add | only
+   * - `fee_model`: only TX by OS | fees are reserved | fees are moved to treasury
+   * - `fee`: fee
+   * - `gov_asset`: control assets to empower actors
+   * - `pay_asset`:
+   * - `member_limit`: max members, if 0 == no limit
+   * - `deposit`: initial deposit for the org treasury
+   *
+   * Emits `OrgCreated` event when successful.
+   *
+   * Weight:
+   */
+    get asV52(): {controllerId: v52.AccountId32, name: Uint8Array, cid: Uint8Array, orgType: v52.OrgType, access: v52.AccessModel, feeModel: v52.FeeModel, fee: bigint, govAsset: number, payAsset: number, memberLimit: bigint, deposit: bigint} {
+    assert(this.isV52)
+    return this.ctx._chain.decodeCall(this.ctx.extrinsic)
+  }
+
+  get isLatest(): boolean {
     deprecateLatest()
-    return this.asV51
+    return this.isV52
+  }
+
+  get asLatest(): {controllerId: v52.AccountId32, name: Uint8Array, cid: Uint8Array, orgType: v52.OrgType, access: v52.AccessModel, feeModel: v52.FeeModel, fee: bigint, govAsset: number, payAsset: number, memberLimit: bigint, deposit: bigint} {
+    deprecateLatest()
+    return this.asV52
   }
 }
 
@@ -74,12 +126,12 @@ export class FlowContributeCall {
 
   /**
    * Contribute to project
-   * 
+   *
    * - `campaign_id`:
    * - `contribution`:
-   * 
+   *
    * Emits `CampaignContributed` event when successful.
-   * 
+   *
    * Weight:
    */
   get isV51(): boolean {
@@ -88,12 +140,12 @@ export class FlowContributeCall {
 
   /**
    * Contribute to project
-   * 
+   *
    * - `campaign_id`:
    * - `contribution`:
-   * 
+   *
    * Emits `CampaignContributed` event when successful.
-   * 
+   *
    * Weight:
    */
   get asV51(): {campaignId: v51.H256, contribution: bigint} {
@@ -119,7 +171,7 @@ export class FlowCreateCampaignCall {
 
   /**
    * Create campaign
-   * 
+   *
    * - `org`:
    * - `admin`: Campaign admin. Supervision, should be dao provided!
    * - `treasury`:
@@ -132,9 +184,9 @@ export class FlowCreateCampaignCall {
    * - `cid`: IPFS
    * - `token_symbol`:
    * - `token_name`:
-   * 
+   *
    * Emits `CampaignCreated` event when successful.
-   * 
+   *
    * Weight:
    */
   get isV51(): boolean {
@@ -143,7 +195,7 @@ export class FlowCreateCampaignCall {
 
   /**
    * Create campaign
-   * 
+   *
    * - `org`:
    * - `admin`: Campaign admin. Supervision, should be dao provided!
    * - `treasury`:
@@ -156,9 +208,9 @@ export class FlowCreateCampaignCall {
    * - `cid`: IPFS
    * - `token_symbol`:
    * - `token_name`:
-   * 
+   *
    * Emits `CampaignCreated` event when successful.
-   * 
+   *
    * Weight:
    */
   get asV51(): {org: v51.H256, admin: v51.AccountId32, name: Uint8Array, target: bigint, deposit: bigint, expiry: number, protocol: v51.FlowProtocol, governance: v51.FlowGovernance, cid: Uint8Array, tokenSymbol: Uint8Array, tokenName: Uint8Array} {
@@ -166,14 +218,63 @@ export class FlowCreateCampaignCall {
     return this.ctx._chain.decodeCall(this.ctx.extrinsic)
   }
 
-  get isLatest(): boolean {
-    deprecateLatest()
-    return this.isV51
+  /**
+   * Create campaign
+   *
+   * - `org`:
+   * - `admin`: Campaign admin. Supervision, should be dao provided!
+   * - `treasury`:
+   * - `name`: Campaign name
+   * - `target`:
+   * - `deposit`:
+   * - `expiry`:
+   * - `protocol`:
+   * - `governance`:
+   * - `cid`: IPFS
+   * - `token_symbol`:
+   * - `token_name`:
+   *
+   * Emits `CampaignCreated` event when successful.
+   *
+   * Weight:
+   */
+  get isV52(): boolean {
+    return this.ctx._chain.getCallHash('flow.create_campaign') === '84695d5b64ff13ce4f64ca0eba57df5d41339b681cef22db16f05b7e417221ff'
   }
 
-  get asLatest(): {org: v51.H256, admin: v51.AccountId32, name: Uint8Array, target: bigint, deposit: bigint, expiry: number, protocol: v51.FlowProtocol, governance: v51.FlowGovernance, cid: Uint8Array, tokenSymbol: Uint8Array, tokenName: Uint8Array} {
+  /**
+   * Create campaign
+   *
+   * - `org`:
+   * - `admin`: Campaign admin. Supervision, should be dao provided!
+   * - `treasury`:
+   * - `name`: Campaign name
+   * - `target`:
+   * - `deposit`:
+   * - `expiry`:
+   * - `protocol`:
+   * - `governance`:
+   * - `cid`: IPFS
+   * - `token_symbol`:
+   * - `token_name`:
+   *
+   * Emits `CampaignCreated` event when successful.
+   *
+   * Weight:
+   */
+  get asV52(): {orgId: v52.H256, adminId: v52.AccountId32, name: Uint8Array, target: bigint, deposit: bigint, expiry: number, protocol: v52.FlowProtocol, governance: v52.FlowGovernance, cid: Uint8Array, tokenSymbol: Uint8Array, tokenName: Uint8Array} {
+    assert(this.isV52)
+    return this.ctx._chain.decodeCall(this.ctx.extrinsic)
+  }
+
+  get isLatest(): boolean {
     deprecateLatest()
-    return this.asV51
+    return this.isV52
+  }
+
+  get asLatest(): {orgId: v52.H256, adminId: v52.AccountId32, name: Uint8Array, target: bigint, deposit: bigint, expiry: number, protocol: v52.FlowProtocol, governance: v52.FlowGovernance, cid: Uint8Array, tokenSymbol: Uint8Array, tokenName: Uint8Array} {
+    deprecateLatest()
+    return this.asV52
   }
 }
 
@@ -184,12 +285,12 @@ export class FlowUpdateStateCall {
 
   /**
    * Update campaign state
-   * 
+   *
    * - `campaign_id`:
    * - `state`:
-   * 
+   *
    * Emits `CampaignUpdated` event when successful.
-   * 
+   *
    * Weight:
    */
   get isV51(): boolean {
@@ -198,12 +299,12 @@ export class FlowUpdateStateCall {
 
   /**
    * Update campaign state
-   * 
+   *
    * - `campaign_id`:
    * - `state`:
-   * 
+   *
    * Emits `CampaignUpdated` event when successful.
-   * 
+   *
    * Weight:
    */
   get asV51(): {campaignId: v51.H256, state: v51.FlowState} {
@@ -211,13 +312,42 @@ export class FlowUpdateStateCall {
     return this.ctx._chain.decodeCall(this.ctx.extrinsic)
   }
 
-  get isLatest(): boolean {
-    deprecateLatest()
-    return this.isV51
+  /**
+   * Update campaign state
+   *
+   * - `campaign_id`:
+   * - `state`:
+   *
+   * Emits `CampaignUpdated` event when successful.
+   *
+   * Weight:
+   */
+  get isV52(): boolean {
+    return this.ctx._chain.getCallHash('flow.update_state') === 'f05863bcf1b93380634f42c04678e86a622a4541b3fe23dfda0a629f950d383e'
   }
 
-  get asLatest(): {campaignId: v51.H256, state: v51.FlowState} {
+  /**
+   * Update campaign state
+   *
+   * - `campaign_id`:
+   * - `state`:
+   *
+   * Emits `CampaignUpdated` event when successful.
+   *
+   * Weight:
+   */
+  get asV52(): {campaignId: v52.H256, state: v52.FlowState} {
+    assert(this.isV52)
+    return this.ctx._chain.decodeCall(this.ctx.extrinsic)
+  }
+
+  get isLatest(): boolean {
     deprecateLatest()
-    return this.asV51
+    return this.isV52
+  }
+
+  get asLatest(): {campaignId: v52.H256, state: v52.FlowState} {
+    deprecateLatest()
+    return this.asV52
   }
 }

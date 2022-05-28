@@ -8,12 +8,14 @@ import { EventHandlerContext } from '@subsquid/substrate-processor';
 // Database
 import { createCampaign } from '../../../database/campaign';
 
+// Helpers
+import { isCIDValid } from '../../../helpers';
+
 // Types
 import { FlowCampaignCreatedEvent } from '../../../types/events';
 import { FlowCreateCampaignCall } from '../../../types/calls';
 import { CampaignCreationData } from '../../../@types/pallets/crowdfunding/campaignCreationData';
 import { CampaignMetadata } from '../../../@types/ipfs/campaignMetadata';
-import { isCIDValid } from '../../../helpers';
 
 // Functions
 async function handleCampaignCreatedEvent(context: EventHandlerContext) {
@@ -50,8 +52,7 @@ async function handleCampaignCreatedEvent(context: EventHandlerContext) {
 				console.error(`Couldn't fetch metadata of campaign ${id}`);
 			}
 		}
-	} catch (e) {
-	}
+	} catch (e) {}
 
 	// Create campaign
 	await createCampaign(context.store, id, context.extrinsic.signer, callCreateData, metadata);
@@ -68,7 +69,35 @@ function getCreateData(context: EventHandlerContext): CampaignCreationData | nul
 
 		// Get versioned data
 		if (createData.isV51) {
-			return createData.asV51;
+			const v51Data = createData.asV51;
+			return {
+				org: v51Data.org,
+				admin: v51Data.admin,
+				name: v51Data.name,
+				target: v51Data.target,
+				deposit: v51Data.deposit,
+				expiry: v51Data.expiry,
+				protocol: v51Data.protocol,
+				governance: v51Data.governance,
+				cid: v51Data.cid,
+				tokenSymbol: v51Data.tokenSymbol,
+				tokenName: v51Data.tokenName,
+			};
+		} else if (createData.isV52) {
+			const v52Data = createData.asV52;
+			return {
+				org: v52Data.orgId,
+				admin: v52Data.adminId,
+				name: v52Data.name,
+				target: v52Data.target,
+				deposit: v52Data.deposit,
+				expiry: v52Data.expiry,
+				protocol: v52Data.protocol,
+				governance: v52Data.governance,
+				cid: v52Data.cid,
+				tokenSymbol: v52Data.tokenSymbol,
+				tokenName: v52Data.tokenName,
+			};
 		} else {
 			console.error(`Unknown version of create campaign extrinsic!`);
 		}

@@ -1,6 +1,7 @@
 import assert from 'assert'
 import {EventContext, Result, deprecateLatest} from './support'
 import * as v51 from './v51'
+import * as v52 from './v52'
 
 export class ControlAddMemberEvent {
   constructor(private ctx: EventContext) {
@@ -191,13 +192,22 @@ export class FlowCampaignUpdatedEvent {
     return this.ctx._chain.decodeEvent(this.ctx.event)
   }
 
-  get isLatest(): boolean {
-    deprecateLatest()
-    return this.isV51
+  get isV52(): boolean {
+    return this.ctx._chain.getEventHash('flow.CampaignUpdated') === 'd53f44018d02dddde23ec6f21223f3faefce4ac995e762fae76a4e26ad18b37a'
   }
 
-  get asLatest(): {campaignId: v51.H256, state: v51.FlowState, blockNumber: number} {
+  get asV52(): {campaignId: v52.H256, state: v52.FlowState, blockNumber: number} {
+    assert(this.isV52)
+    return this.ctx._chain.decodeEvent(this.ctx.event)
+  }
+
+  get isLatest(): boolean {
     deprecateLatest()
-    return this.asV51
+    return this.isV52
+  }
+
+  get asLatest(): {campaignId: v52.H256, state: v52.FlowState, blockNumber: number} {
+    deprecateLatest()
+    return this.asV52
   }
 }
