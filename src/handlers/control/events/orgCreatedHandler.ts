@@ -1,5 +1,5 @@
 // Imports
-import { addressCodec, hashToHexString } from '../../../utils';
+import { addressCodec, encodeSigner, hashToHexString } from '../../../utils';
 import { fetchOrganizationMetadata } from '../../../ipfs/organization';
 
 // Database
@@ -58,7 +58,7 @@ async function handleOrgCreatedEvent(context: EventHandlerContext) {
 	const organization = await createOrganization(
 		context.store,
 		id,
-		context.extrinsic.signer,
+		encodeSigner(context.extrinsic.signer),
 		callCreateData,
 		metadata,
 	);

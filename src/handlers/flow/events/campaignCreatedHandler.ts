@@ -1,5 +1,5 @@
 // Imports
-import { hashToHexString } from '../../../utils';
+import { encodeSigner, hashToHexString } from '../../../utils';
 import { fetchCampaignMetadata } from '../../../ipfs/campaign';
 
 // 3rd
@@ -53,7 +53,7 @@ async function handleCampaignCreatedEvent(context: EventHandlerContext) {
 	} catch (e) {}
 
 	// Create campaign
-	await createCampaign(context.store, id, context.extrinsic.signer, callCreateData, metadata);
+	await createCampaign(context.store, id, encodeSigner(context.extrinsic.signer), callCreateData, metadata);
 }
 
 // Exports

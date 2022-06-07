@@ -1,14 +1,14 @@
 // Imports
-import { hexStringToString } from '../../../utils';
+import { encodeSigner, hexStringToString } from '../../../utils';
 
 // 3rd
 import { EventHandlerContext } from '@subsquid/substrate-processor';
 
 // Database
+import { upsertIdentity } from '../../../database/identity';
 
 // Types
 import { IdentityUpsertData } from '../../../@types/pallets/identity/identityUpsertData';
-import { upsertIdentity } from '../../../database/identity';
 
 // Logic
 async function handleIdentitySetEvent(context: EventHandlerContext) {
@@ -19,7 +19,7 @@ async function handleIdentitySetEvent(context: EventHandlerContext) {
 	const identityData = context.extrinsic.args[0].value as { [key: string]: any };
 
 	const upsertData: IdentityUpsertData = {
-		address: context.extrinsic.signer,
+		address: encodeSigner(context.extrinsic.signer),
 		displayName: getValue(identityData.display?.raw),
 		legalName: getValue(identityData.legal?.raw),
 		email: getValue(identityData.email?.raw),
