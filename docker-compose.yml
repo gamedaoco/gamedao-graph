@@ -1,63 +1,11 @@
+version: "3"
+
 services:
-  ## DB
-  squid-postgres:
+  db:
     image: postgres:12
-    restart: always
-    ports:
-      - 5555:5432
-    volumes:
-      - /data/graphql/squid/postgres/indexer:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: postgres
       POSTGRES_PASSWORD: postgres
-
-  ## Service
-  squid-service:
-    build:
-      context: ./graph/
-      network: host
-    volumes:
-      - "./config.json:/squid/lib/config.json:ro"
-    environment:
-      DB_HOST: squid-postgres
-      DB_PORT: 5432
-      DB_NAME: postgres
-      DB_USER: postgres
-      DB_PASS: postgres
-    depends_on:
-      - "squid-postgres"
-    networks:
-      - default
-      - internal-bridge
-
-  ## Hasura
-  squid-graphql-engine:
-    image: hasura/graphql-engine:v2.7.0
-    networks:
-      - default
-      - proxy
-    depends_on:
-      - "squid-postgres"
-      - "squid-service"
-    restart: always
     ports:
-      - 4010:8080
-    environment:
-      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:postgres@squid-postgres:5432/postgres
-      PG_DATABASE_URL: postgres://postgres:postgres@squid-postgres:5432/postgres
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
-      HASURA_GRAPHQL_DEV_MODE: "false"
-      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
-      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
-      VIRTUAL_HOST: graph.gamedao.co
-      VIRTUAL_PORT: 4010
-      LETSENCRYPT_HOST: graph.gamedao.co
-      LETSENCRYPT_EMAIL: hey@gamedao.co
-
-networks:
-  proxy:
-    name: proxy
-    external: true
-  internal-bridge:
-    name: internal-bridge
-    external: true
+      - "${DB_PORT}:5432"
+      # command: ["postgres", "-c", "log_statement=all"]
