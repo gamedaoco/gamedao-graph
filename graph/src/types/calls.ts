@@ -2,6 +2,7 @@ import assert from 'assert'
 import {CallContext, Result, deprecateLatest} from './support'
 import * as v51 from './v51'
 import * as v52 from './v52'
+import * as v55 from './v55'
 
 export class ControlCreateOrgCall {
   constructor(private ctx: CallContext) {
@@ -108,14 +109,69 @@ export class ControlCreateOrgCall {
     return this.ctx._chain.decodeCall(this.ctx.extrinsic)
   }
 
-  get isLatest(): boolean {
-    deprecateLatest()
-    return this.isV52
+  /**
+   * Create an on chain organization
+   * 
+   * Parameters:
+   * - `origin`: Org creator.
+   * - `controller_id`: Org controller.
+   * - `name`: Org name.
+   * - `cid`: IPFS content identifier.
+   * - `org_type`: Individual | Company | Dao | Hybrid.
+   * - `access`: Open (anyone can join) | Voting (membership voting) |
+   * 	Controller (controller invites).
+   * - `fee_model`: NoFees | Reserve (amount reserved in user account) |
+   * 	Transfer (amount transfered to Org treasury).
+   * - `fee`: fees amount to be applied to new members based on fee model (in Protocol tokens).
+   * - `gov_asset`: control assets to empower actors.
+   * - `pay_asset`: asset used for payments.
+   * - `member_limit`: max members, if 0 == no limit.
+   * - `deposit`: initial deposit for the org treasury (in Protocol tokens).
+   * 
+   * Emits `OrgCreated` event when successful.
+   * 
+   * Weight: `O(1)`
+   */
+  get isV55(): boolean {
+    return this.ctx._chain.getCallHash('control.create_org') === '81bde91f3e1db8771f7a2bc5d8d9127271c8cda8de09c8b49e1eeddfab40f895'
   }
 
-  get asLatest(): {controllerId: v52.AccountId32, name: Uint8Array, cid: Uint8Array, orgType: v52.OrgType, access: v52.AccessModel, feeModel: v52.FeeModel, fee: bigint, govAsset: number, payAsset: number, memberLimit: bigint, deposit: bigint} {
+  /**
+   * Create an on chain organization
+   * 
+   * Parameters:
+   * - `origin`: Org creator.
+   * - `controller_id`: Org controller.
+   * - `name`: Org name.
+   * - `cid`: IPFS content identifier.
+   * - `org_type`: Individual | Company | Dao | Hybrid.
+   * - `access`: Open (anyone can join) | Voting (membership voting) |
+   * 	Controller (controller invites).
+   * - `fee_model`: NoFees | Reserve (amount reserved in user account) |
+   * 	Transfer (amount transfered to Org treasury).
+   * - `fee`: fees amount to be applied to new members based on fee model (in Protocol tokens).
+   * - `gov_asset`: control assets to empower actors.
+   * - `pay_asset`: asset used for payments.
+   * - `member_limit`: max members, if 0 == no limit.
+   * - `deposit`: initial deposit for the org treasury (in Protocol tokens).
+   * 
+   * Emits `OrgCreated` event when successful.
+   * 
+   * Weight: `O(1)`
+   */
+  get asV55(): {controllerId: v55.AccountId32, name: Uint8Array, cid: Uint8Array, orgType: v55.OrgType, access: v55.AccessModel, feeModel: v55.FeeModel, fee: bigint, govAsset: number, payAsset: number, memberLimit: bigint, deposit: (bigint | undefined)} {
+    assert(this.isV55)
+    return this.ctx._chain.decodeCall(this.ctx.extrinsic)
+  }
+
+  get isLatest(): boolean {
     deprecateLatest()
-    return this.asV52
+    return this.isV55
+  }
+
+  get asLatest(): {controllerId: v55.AccountId32, name: Uint8Array, cid: Uint8Array, orgType: v55.OrgType, access: v55.AccessModel, feeModel: v55.FeeModel, fee: bigint, govAsset: number, payAsset: number, memberLimit: bigint, deposit: (bigint | undefined)} {
+    deprecateLatest()
+    return this.asV55
   }
 }
 

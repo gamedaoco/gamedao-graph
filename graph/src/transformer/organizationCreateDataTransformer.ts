@@ -36,27 +36,30 @@ function getOrganizationCreationData(context: EventHandlerContext): Organization
 				memberLimit: v51Data.memberLimit,
 				blockNumber: context.block.height,
 			};
-		} else if (createData.isV52) {
-			const v52Data = createData.asV52;
-			return {
-				name: v52Data.name.toString(),
-				cid: v52Data.cid.toString(),
-
-				controller: addressCodec.encode(v52Data.controllerId),
-
-				orgType: v52Data.orgType,
-				access: v52Data.access,
-				feeModel: v52Data.feeModel,
-				fee: v52Data.fee,
-
-				govAsset: v52Data.govAsset,
-				payAsset: v52Data.payAsset,
-
-				memberLimit: v52Data.memberLimit,
-				blockNumber: context.block.height,
-			};
 		} else {
-			console.error(`Unknown version of create organization extrinsic!`);
+			let isV52 = createData.isV52, isV55 = createData.isV55;
+			if (isV52 || isV55) {
+				let data = isV52 ? createData.asV52 : createData.asV55;
+				return {
+					name: data.name.toString(),
+					cid: data.cid.toString(),
+
+					controller: addressCodec.encode(data.controllerId),
+
+					orgType: data.orgType,
+					access: data.access,
+					feeModel: data.feeModel,
+					fee: data.fee,
+
+					govAsset: data.govAsset,
+					payAsset: data.payAsset,
+
+					memberLimit: data.memberLimit,
+					blockNumber: context.block.height,
+				};
+			} else {
+				console.error(`Unknown version of create organization extrinsic!`);
+			}
 		}
 	}
 
